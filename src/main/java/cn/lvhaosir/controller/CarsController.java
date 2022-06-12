@@ -18,7 +18,7 @@ public class CarsController {
     @Autowired
     private CarsService carsService;
 
-    @RequestMapping(value = "/addCars")
+    @PostMapping(value = "/addCars")
     public Result<String> addCars(@RequestBody Cars car) {
         Integer add = carsService.add(car);
         return Result.ok(add == 1 ? SystemSuccess.ADD_CAR_SUCCESS.getMessage() : SystemException.ADD_CAR_FAILED.getMessage());
@@ -30,7 +30,7 @@ public class CarsController {
         return Result.ok(delete == 1 ? SystemSuccess.DELETE_CAR_SUCCESS.getMessage() : SystemException.DELETE_CAR_FAILED.getMessage());
     }
 
-    @RequestMapping(value = "/updateCars")
+    @PostMapping(value = "/updateCars")
     public Result<String> updateCars(@RequestBody Cars car) {
         Integer update = carsService.update(car);
         return Result.ok(update == 1 ? SystemSuccess.UPDATE_CAR_SUCCESS.getMessage() : SystemException.UPDATE_CAR_FAILED.getMessage());

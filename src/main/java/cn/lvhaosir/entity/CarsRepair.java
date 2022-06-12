@@ -13,9 +13,17 @@ public class CarsRepair extends PageParam implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "cars_repair_id")
     private Integer carsRepairId;
+
+    @Column(name = "user_name")
+    private String userName;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "car_number")
+    private String carNumber;
 
     @Column(name = "cars_repair_type")
     private String carsRepairType;
@@ -27,7 +35,7 @@ public class CarsRepair extends PageParam implements Serializable {
     private Integer carId;
 
     @Column(name = "create_time")
-    private String createTime;
+    private Date createTime;
 
     @Column(name = "update_time")
     private Date updateTime;

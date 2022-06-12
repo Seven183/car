@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,6 +24,8 @@ public class CarsRepairServiceImpl implements CarsRepairService {
 
 	@Override
 	public Integer add(CarsRepair carsRepair) {
+		carsRepair.setCreateTime(new Date());
+		carsRepair.setUpdateTime(new Date());
 		return carsRepairMapper.insert(carsRepair);
 	}
 
@@ -35,7 +38,7 @@ public class CarsRepairServiceImpl implements CarsRepairService {
 	public Integer update(CarsRepair carsRepair) {
 		Example example = new Example(CarsRepair.class);
 		Example.Criteria criteria = example.createCriteria();
-		criteria.andEqualTo("carsRepairText",carsRepair.getCarsRepairText());
+		criteria.andEqualTo("carsRepairId",carsRepair.getCarsRepairId());
 		return carsRepairMapper.updateByExampleSelective(carsRepair, example);
 	}
 

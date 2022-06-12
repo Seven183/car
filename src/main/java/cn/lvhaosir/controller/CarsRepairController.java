@@ -18,7 +18,7 @@ public class CarsRepairController {
     private CarsRepairService carsRepairService;
 
     @PostMapping(value = "/addCarsRepair")
-    public Result<String> addCarsRepair(CarsRepair carsRepair) {
+    public Result<String> addCarsRepair(@RequestBody CarsRepair carsRepair) {
         Integer add = carsRepairService.add(carsRepair);
         return Result.ok(add == 1 ? SystemSuccess.ADD_CAR_REPAIR_SUCCESS.getMessage() : SystemException.ADD_CAR_REPAIR_FAILED.getMessage());
     }
@@ -30,7 +30,7 @@ public class CarsRepairController {
     }
 
     @PostMapping(value = "/updateCarsRepair")
-    public Result<String> updateCarsRepair(CarsRepair carsRepair) {
+    public Result<String> updateCarsRepair(@RequestBody CarsRepair carsRepair) {
         Integer update = carsRepairService.update(carsRepair);
         return Result.ok(update == 1 ? SystemSuccess.UPDATE_CAR_REPAIR_SUCCESS.getMessage() : SystemException.UPDATE_CAR_REPAIR_FAILED.getMessage());
     }
