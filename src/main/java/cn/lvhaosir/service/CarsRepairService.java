@@ -2,6 +2,7 @@ package cn.lvhaosir.service;
 
 
 import cn.lvhaosir.entity.CarsRepair;
+import cn.lvhaosir.paramater.CarsRepairParameter;
 import cn.lvhaosir.utils.PageData;
 
 
@@ -17,5 +18,5 @@ public interface CarsRepairService {
 
 	public PageData<CarsRepair> queryLikeCarsRepair(CarsRepair carsRepair);
 
-	public PageData<CarsRepair> queryAllCarsRepair(CarsRepair carsRepair);
+	public PageData<CarsRepair> queryAllCarsRepair(CarsRepairParameter carsRepairParameter);
 }

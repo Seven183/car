@@ -2,6 +2,7 @@ package cn.lvhaosir.controller;
 
 
 import cn.lvhaosir.entity.CarsRepair;
+import cn.lvhaosir.paramater.CarsRepairParameter;
 import cn.lvhaosir.service.CarsRepairService;
 import cn.lvhaosir.utils.PageData;
 import cn.lvhaosir.utils.Result;
@@ -48,8 +49,8 @@ public class CarsRepairController {
     }
 
     @GetMapping(value = "/allCarsRepair")
-    public Result<PageData<CarsRepair>> queryAllCarsRepair(CarsRepair carsRepair) {
-        PageData<CarsRepair> queryParamList = carsRepairService.queryAllCarsRepair(carsRepair);
+    public Result<PageData<CarsRepair>> queryAllCarsRepair(CarsRepairParameter carsRepairParameter) {
+        PageData<CarsRepair> queryParamList = carsRepairService.queryAllCarsRepair(carsRepairParameter);
         return Result.ok(queryParamList);
     }
 }
