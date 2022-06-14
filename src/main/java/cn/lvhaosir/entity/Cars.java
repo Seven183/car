@@ -1,6 +1,7 @@
 package cn.lvhaosir.entity;
 
 import cn.lvhaosir.utils.PageParam;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -31,6 +32,7 @@ public class Cars extends PageParam implements Serializable {
     @Column(name = "driver_id")
     private Integer driverId;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Column(name = "create_time")
     private Date createTime;
 

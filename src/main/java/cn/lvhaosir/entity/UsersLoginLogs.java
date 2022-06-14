@@ -1,6 +1,7 @@
 package cn.lvhaosir.entity;
 
 import cn.lvhaosir.utils.PageParam;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class UsersLoginLogs extends PageParam implements Serializable {
     @Column(name = "login_time")
     private Date loginTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Column(name = "create_time")
     private Date createTime;
 }

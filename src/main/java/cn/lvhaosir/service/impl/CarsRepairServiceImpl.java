@@ -5,6 +5,7 @@ import cn.lvhaosir.entity.CarsRepair;
 import cn.lvhaosir.mapper.CarsRepairMapper;
 import cn.lvhaosir.paramater.CarsRepairParameter;
 import cn.lvhaosir.service.CarsRepairService;
+import cn.lvhaosir.utils.DateUtils;
 import cn.lvhaosir.utils.PageData;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.text.ParseException;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -61,26 +64,28 @@ public class CarsRepairServiceImpl implements CarsRepairService {
     }
 
     @Override
-    public PageData<CarsRepair> queryAllCarsRepair(CarsRepairParameter carsRepairParameter) {
+    public PageData<CarsRepair> queryAllCarsRepair(CarsRepairParameter carsRepairParameter) throws ParseException {
         PageHelper.startPage(carsRepairParameter.getPageNum(), carsRepairParameter.getPageSize());
         Example example = new Example(CarsRepair.class);
         Example.Criteria criteria = example.createCriteria();
         if (StringUtils.isNotBlank(carsRepairParameter.getUserName())) {
-            criteria.andEqualTo("userName", carsRepairParameter.getUserName());
+            criteria.andLike("userName", "%" + carsRepairParameter.getUserName() + "%");
         }
         if (StringUtils.isNotBlank(carsRepairParameter.getPhone())) {
-            criteria.andEqualTo("phone", carsRepairParameter.getPhone());
+            criteria.andLike("phone", "%" + carsRepairParameter.getPhone() + "%");
         }
         if (StringUtils.isNotBlank(carsRepairParameter.getCarNumber())) {
-            criteria.andEqualTo("carNumber", carsRepairParameter.getCarNumber());
+            criteria.andLike("carNumber", "%" + carsRepairParameter.getCarNumber() + "%");
         }
-        if (carsRepairParameter.getCreateTimeArray() != null) {
-//            criteria.andEqualTo("createTime", carsRepairParameter.getCreateTimeArray()[0]);
-            criteria.andBetween("createTime",
-                    carsRepairParameter.getCreateTimeArray()[0],
-                    carsRepairParameter.getCreateTimeArray()[1]);
+        if (StringUtils.isNotBlank(carsRepairParameter.getStartCreateTime()) && StringUtils.isBlank(carsRepairParameter.getEndCreateTime())) {
+            criteria.andBetween("createTime", carsRepairParameter.getStartCreateTime(), DateUtils.dateIncrease(new Date(),1));
+        } else if (StringUtils.isNotBlank(carsRepairParameter.getStartCreateTime()) && StringUtils.isNotBlank(carsRepairParameter.getEndCreateTime())) {
+            criteria.andBetween("createTime", carsRepairParameter.getStartCreateTime(), DateUtils.dateIncrease(DateUtils.strToDate(carsRepairParameter.getEndCreateTime()),1));
+        } else if (StringUtils.isBlank(carsRepairParameter.getStartCreateTime()) && StringUtils.isNotBlank(carsRepairParameter.getEndCreateTime())) {
+            criteria.andBetween("createTime", "1970-01-01", DateUtils.dateIncrease(DateUtils.strToDate(carsRepairParameter.getEndCreateTime()),1));
         }
         List<CarsRepair> list = carsRepairMapper.selectByExample(example);
+        list.sort(Comparator.comparing(CarsRepair::getCreateTime).reversed());
         PageInfo<CarsRepair> pageInfo = PageInfo.of(list);
         return new PageData<>(list, pageInfo.getTotal());
     }

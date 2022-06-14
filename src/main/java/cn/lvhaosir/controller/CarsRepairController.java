@@ -11,6 +11,8 @@ import cn.lvhaosir.utils.SystemSuccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+
 @RestController
 @RequestMapping("/carsRepair")
 public class CarsRepairController {
@@ -49,7 +51,7 @@ public class CarsRepairController {
     }
 
     @GetMapping(value = "/allCarsRepair")
-    public Result<PageData<CarsRepair>> queryAllCarsRepair(CarsRepairParameter carsRepairParameter) {
+    public Result<PageData<CarsRepair>> queryAllCarsRepair(CarsRepairParameter carsRepairParameter) throws ParseException {
         PageData<CarsRepair> queryParamList = carsRepairService.queryAllCarsRepair(carsRepairParameter);
         return Result.ok(queryParamList);
     }
