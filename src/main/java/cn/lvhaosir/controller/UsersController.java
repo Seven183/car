@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UsersController {
 	
 	@Autowired
@@ -48,9 +48,9 @@ public class UsersController {
 		return Result.ok(user);
 	}
 
-	@GetMapping(value="/queryAllUsers")
-	public Result<PageData<Users>> queryAllUsers(PageParam pageParam){
-		PageData<Users> queryPageList = usersService.queryAllList(pageParam);
+	@GetMapping(value="/allUsers")
+	public Result<PageData<Users>> allUsers(PageParam pageParam){
+		PageData<Users> queryPageList = usersService.allUsers(pageParam);
 		return Result.ok(queryPageList);
 	}
 }

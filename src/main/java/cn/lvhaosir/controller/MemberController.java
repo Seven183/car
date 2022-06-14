@@ -20,25 +20,25 @@ public class MemberController {
     private MemberService memberService;
 
     @PostMapping(value = "/addMember")
-    public Result<String> addAdvice(@RequestBody Member member) {
+    public Result<String> addMember(@RequestBody Member member) {
         Integer add = memberService.add(member);
         return Result.ok(add == 1 ? SystemSuccess.ADD_MEMBER_SUCCESS.getMessage() : SystemException.ADD_MEMBER_FAILED.getMessage());
     }
 
     @GetMapping(value = "/deleteMember/{id}")
-    public Result<String> deleteAdvice(@PathVariable Integer id) {
+    public Result<String> deleteMember(@PathVariable Integer id) {
         Integer delete = memberService.delete(id);
         return Result.ok(delete == 1 ? SystemSuccess.DELETE_MEMBER_SUCCESS.getMessage() : SystemException.DELETE_MEMBER_FAILED.getMessage());
     }
 
     @PostMapping(value = "/updateMember")
-    public Result<String> updateAdvice(@RequestBody Member member) {
+    public Result<String> updateMember(@RequestBody Member member) {
         Integer update = memberService.update(member);
         return Result.ok(update == 1 ? SystemSuccess.UPDATE_MEMBER_SUCCESS.getMessage() : SystemException.UPDATE_MEMBER_FAILED.getMessage());
     }
 
     @GetMapping(value = "/select/{id}")
-    public Result<Member> queryAll(@PathVariable Integer id) {
+    public Result<Member> selectMemberById(@PathVariable Integer id) {
         Member member = memberService.selectMemberById(id);
         return Result.ok(member);
     }
@@ -49,9 +49,9 @@ public class MemberController {
         return Result.ok(advicesPageData);
     }
 
-    @GetMapping(value = "/queryAllMember")
-    public Result<PageData<Member>> queryAllAdvice(PageParam pageParam) {
-        PageData<Member> memberPageData = memberService.queryAllMembers(pageParam);
+    @GetMapping(value = "/allMember")
+    public Result<PageData<Member>> allMember(PageParam pageParam) {
+        PageData<Member> memberPageData = memberService.allMember(pageParam);
         return Result.ok(memberPageData);
     }
 }

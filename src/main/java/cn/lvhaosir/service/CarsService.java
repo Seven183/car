@@ -16,6 +16,6 @@ public interface CarsService {
 
 	public PageData<Cars> queryLikeCars(Cars car);
 
-	public PageData<Cars> queryAllCars(PageParam pageParam);
+	public PageData<Cars> allCars(PageParam pageParam);
 
 }

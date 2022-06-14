@@ -17,5 +17,5 @@ public interface DriversService{
 
 	public PageData<Drivers> queryLikeDrivers(Drivers driver);
 
-	public PageData<Drivers> queryAllDrivers(PageParam pageParam);
+	public PageData<Drivers> allDrivers(PageParam pageParam);
 }

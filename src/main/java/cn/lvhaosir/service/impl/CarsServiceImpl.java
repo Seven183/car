@@ -54,7 +54,7 @@ public class CarsServiceImpl implements CarsService {
     }
 
     @Override
-    public PageData<Cars> queryAllCars(PageParam pageParam) {
+    public PageData<Cars> allCars(PageParam pageParam) {
         PageHelper.startPage(pageParam.getPageNum(),pageParam.getPageSize());
         List<Cars> list = carsMapper.selectAll();
         PageInfo<Cars> pageInfo = PageInfo.of(list);

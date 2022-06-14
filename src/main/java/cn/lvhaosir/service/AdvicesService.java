@@ -17,5 +17,5 @@ public interface AdvicesService {
 
     public PageData<Advices> queryLikeAdvices(Advices advice);
 
-    public PageData<Advices> queryAllAdvices(PageParam pageParam);
+    public PageData<Advices> allAdvices(PageParam pageParam);
 }

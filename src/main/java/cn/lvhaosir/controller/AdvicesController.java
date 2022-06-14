@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/advices")
+@RequestMapping("/advice")
 public class AdvicesController {
 
     @Autowired
@@ -38,7 +38,7 @@ public class AdvicesController {
     }
 
     @GetMapping(value = "/select/{id}")
-    public Result<Advices> queryAll(@PathVariable Integer id) {
+    public Result<Advices> selectAdvicesById(@PathVariable Integer id) {
         Advices advices = advicesService.selectAdvicesById(id);
         return Result.ok(advices);
     }
@@ -49,9 +49,9 @@ public class AdvicesController {
         return Result.ok(advicesPageData);
     }
 
-    @GetMapping(value = "/queryAllAdvice")
-    public Result<PageData<Advices>> queryAllAdvice(PageParam pageParam) {
-        PageData<Advices> advicesPageData = advicesService.queryAllAdvices(pageParam);
+    @GetMapping(value = "/allAdvices")
+    public Result<PageData<Advices>> allAdvices(PageParam pageParam) {
+        PageData<Advices> advicesPageData = advicesService.allAdvices(pageParam);
         return Result.ok(advicesPageData);
     }
 }

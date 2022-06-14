@@ -57,7 +57,7 @@ public class AdvicesServiceImpl implements AdvicesService {
     }
 
     @Override
-    public PageData<Advices> queryAllAdvices(PageParam pageParam) {
+    public PageData<Advices> allAdvices(PageParam pageParam) {
         PageHelper.startPage(pageParam.getPageNum(),pageParam.getPageSize());
         List<Advices> list = advicesMapper.selectAll();
         PageInfo<Advices> pageInfo = PageInfo.of(list);

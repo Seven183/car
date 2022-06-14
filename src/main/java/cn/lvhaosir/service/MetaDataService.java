@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface MetaDataService {
 
-    public List<MetaData> queryMetaDataByType(String type);
+    public List<MetaData> selectMetaDataByType(String type);
 }

@@ -12,32 +12,32 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/cars")
+@RequestMapping("/car")
 public class CarsController {
 
     @Autowired
     private CarsService carsService;
 
-    @PostMapping(value = "/addCars")
-    public Result<String> addCars(@RequestBody Cars car) {
+    @PostMapping(value = "/addCar")
+    public Result<String> addCar(@RequestBody Cars car) {
         Integer add = carsService.add(car);
         return Result.ok(add == 1 ? SystemSuccess.ADD_CAR_SUCCESS.getMessage() : SystemException.ADD_CAR_FAILED.getMessage());
     }
 
-    @GetMapping(value = "/deleteCars/{carId}")
-    public Result<String> deleteCars(@PathVariable Integer carId) {
+    @GetMapping(value = "/deleteCar/{carId}")
+    public Result<String> deleteCar(@PathVariable Integer carId) {
         Integer delete = carsService.delete(carId);
         return Result.ok(delete == 1 ? SystemSuccess.DELETE_CAR_SUCCESS.getMessage() : SystemException.DELETE_CAR_FAILED.getMessage());
     }
 
-    @PostMapping(value = "/updateCars")
-    public Result<String> updateCars(@RequestBody Cars car) {
+    @PostMapping(value = "/updateCar")
+    public Result<String> updateCar(@RequestBody Cars car) {
         Integer update = carsService.update(car);
         return Result.ok(update == 1 ? SystemSuccess.UPDATE_CAR_SUCCESS.getMessage() : SystemException.UPDATE_CAR_FAILED.getMessage());
     }
 
     @GetMapping(value = "/select/{carId}")
-    public Result<Cars> queryCarsById(@PathVariable Integer carId) {
+    public Result<Cars> selectCarById(@PathVariable Integer carId) {
         Cars car = carsService.selectCarById(carId);
         return Result.ok(car);
     }
@@ -48,9 +48,9 @@ public class CarsController {
         return Result.ok(carsPageData);
     }
 
-    @GetMapping(value = "/queryAllCars")
-    public Result<PageData<Cars>> queryAllCars(PageParam pageParam) {
-        PageData<Cars> carsPageData = carsService.queryAllCars(pageParam);
+    @GetMapping(value = "/allCars")
+    public Result<PageData<Cars>> allCars(PageParam pageParam) {
+        PageData<Cars> carsPageData = carsService.allCars(pageParam);
         return Result.ok(carsPageData);
     }
 }

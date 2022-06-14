@@ -39,7 +39,7 @@ public class CarsRepairController {
     }
 
     @GetMapping(value = "/select/{carsRepairId}")
-    public Result<CarsRepair> queryCarsRepairById(@PathVariable Integer carsRepairId) {
+    public Result<CarsRepair> selectCarsRepairById(@PathVariable Integer carsRepairId) {
         CarsRepair carsRepair = carsRepairService.selectCarsRepairById(carsRepairId);
         return Result.ok(carsRepair);
     }
@@ -50,9 +50,9 @@ public class CarsRepairController {
         return Result.ok(carsRepairPageData);
     }
 
-    @GetMapping(value = "/allCarsRepair")
-    public Result<PageData<CarsRepair>> queryAllCarsRepair(CarsRepairParameter carsRepairParameter) throws ParseException {
-        PageData<CarsRepair> queryParamList = carsRepairService.queryAllCarsRepair(carsRepairParameter);
+    @GetMapping(value = "/allCarsRepairs")
+    public Result<PageData<CarsRepair>> queryAllCarsRepairs(CarsRepairParameter carsRepairParameter) throws ParseException {
+        PageData<CarsRepair> queryParamList = carsRepairService.queryAllCarsRepairs(carsRepairParameter);
         return Result.ok(queryParamList);
     }
 }

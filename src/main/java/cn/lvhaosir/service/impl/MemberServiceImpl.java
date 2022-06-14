@@ -56,7 +56,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public PageData<Member> queryAllMembers(PageParam pageParam) {
+    public PageData<Member> allMember(PageParam pageParam) {
         PageHelper.startPage(pageParam.getPageNum(),pageParam.getPageSize());
         List<Member> list = memberMapper.selectAll();
         PageInfo<Member> pageInfo = PageInfo.of(list);

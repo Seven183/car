@@ -16,7 +16,7 @@ public class MetaDataServiceImpl implements MetaDataService {
     private MataDataMapper mataDataMapper;
 
     @Override
-    public List<MetaData> queryMetaDataByType(String type) {
+    public List<MetaData> selectMetaDataByType(String type) {
         Example example = new Example(MetaData.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("type",type);

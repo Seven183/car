@@ -16,5 +16,5 @@ public interface MemberService {
 
     public PageData<Member> queryLikeMembers(Member member);
 
-    public PageData<Member> queryAllMembers(PageParam pageParam);
+    public PageData<Member> allMember(PageParam pageParam);
 }

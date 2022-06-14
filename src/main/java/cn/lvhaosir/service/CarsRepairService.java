@@ -20,5 +20,5 @@ public interface CarsRepairService {
 
 	public PageData<CarsRepair> queryLikeCarsRepair(CarsRepair carsRepair);
 
-	public PageData<CarsRepair> queryAllCarsRepair(CarsRepairParameter carsRepairParameter) throws ParseException;
+	public PageData<CarsRepair> queryAllCarsRepairs(CarsRepairParameter carsRepairParameter) throws ParseException;
 }

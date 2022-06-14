@@ -58,7 +58,7 @@ public class DriversServiceImpl implements DriversService {
 	}
 
 	@Override
-	public PageData<Drivers> queryAllDrivers(PageParam pageParam) {
+	public PageData<Drivers> allDrivers(PageParam pageParam) {
 		PageHelper.startPage(pageParam.getPageNum(),pageParam.getPageSize());
 		List<Drivers> list = driversMapper.selectAll();
 		PageInfo<Drivers> pageInfo = PageInfo.of(list);

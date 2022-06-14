@@ -16,7 +16,7 @@ public interface UsersService {
 
     public PageData<Users> queryListByParam(Users users);
 
-    public PageData<Users> queryAllList(PageParam pageParam);
+    public PageData<Users> allUsers(PageParam pageParam);
 
     public Users login(Users model);
 

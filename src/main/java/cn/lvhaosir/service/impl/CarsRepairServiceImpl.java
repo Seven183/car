@@ -64,7 +64,7 @@ public class CarsRepairServiceImpl implements CarsRepairService {
     }
 
     @Override
-    public PageData<CarsRepair> queryAllCarsRepair(CarsRepairParameter carsRepairParameter) throws ParseException {
+    public PageData<CarsRepair> queryAllCarsRepairs(CarsRepairParameter carsRepairParameter) throws ParseException {
         PageHelper.startPage(carsRepairParameter.getPageNum(), carsRepairParameter.getPageSize());
         Example example = new Example(CarsRepair.class);
         Example.Criteria criteria = example.createCriteria();

@@ -37,7 +37,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public PageData<Users> queryAllList(PageParam pageParam) {
+    public PageData<Users> allUsers(PageParam pageParam) {
         PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize());
         List<Users> list = baseMapper.selectAll();
         PageInfo<Users> pageInfo = PageInfo.of(list);

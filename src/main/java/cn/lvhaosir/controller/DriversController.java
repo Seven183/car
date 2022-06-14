@@ -16,39 +16,39 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 
 @RestController
-@RequestMapping("/drivers")
+@RequestMapping("/driver")
 public class DriversController {
 
     @Autowired
     private DriversService driversService;
 
-    @PostMapping(value = "/addDrivers")
-    public Result<String> addDrivers(@RequestBody Drivers driver) {
+    @PostMapping(value = "/addDriver")
+    public Result<String> addDriver(@RequestBody Drivers driver) {
         Integer add = driversService.add(driver);
         return Result.ok(add == 1 ? SystemSuccess.ADD_DRIVER_SUCCESS.getMessage() : SystemException.ADD_DRIVER_FAILED.getMessage());
     }
 
-	@GetMapping(value = "/deleteDrivers/{id}")
-	public Result<String> deleteDrivers(@PathVariable Integer id) {
+	@GetMapping(value = "/deleteDriver/{id}")
+	public Result<String> deleteDriver(@PathVariable Integer id) {
 		Integer delete = driversService.delete(id);
 		return Result.ok(delete == 1 ? SystemSuccess.DELETE_DRIVER_SUCCESS.getMessage() : SystemException.DELETE_DRIVER_FAILED.getMessage());
 	}
 
-    @PostMapping(value = "/updateDrivers")
-    public Result<String> updateDrivers(@RequestBody Drivers driver) {
+    @PostMapping(value = "/updateDriver")
+    public Result<String> updateDriver(@RequestBody Drivers driver) {
         Integer update = driversService.update(driver);
         return Result.ok(update == 1 ? SystemSuccess.UPDATE_DRIVER_SUCCESS.getMessage() : SystemException.UPDATE_DRIVER_FAILED.getMessage());
     }
 
 	@GetMapping(value = "/select/{driverId}")
-	public Result<Drivers> selectDriversById(@PathVariable Integer driverId) {
+	public Result<Drivers> selectDriverById(@PathVariable Integer driverId) {
 		Drivers queryById = driversService.selectDriverById(driverId);
 		return Result.ok(queryById);
 	}
 
-    @GetMapping(value = "/queryAllDrivers")
-    public Result<PageData<Drivers>> queryAllDrivers(PageParam pageParam) {
-		PageData<Drivers> queryPageList = driversService.queryAllDrivers(pageParam);
+    @GetMapping(value = "/allDrivers")
+    public Result<PageData<Drivers>> allDrivers(PageParam pageParam) {
+		PageData<Drivers> queryPageList = driversService.allDrivers(pageParam);
         return Result.ok(queryPageList);
     }
 
