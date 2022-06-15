@@ -2,16 +2,18 @@ package cn.lvhaosir.service.impl;
 
 
 import cn.lvhaosir.entity.Advices;
-import cn.lvhaosir.utils.PageData;
-import cn.lvhaosir.utils.PageParam;
 import cn.lvhaosir.mapper.AdvicesMapper;
+import cn.lvhaosir.paramater.AdvicesParameter;
 import cn.lvhaosir.service.AdvicesService;
+import cn.lvhaosir.utils.PageData;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +40,8 @@ public class AdvicesServiceImpl implements AdvicesService {
     public Integer update(Advices advice) {
         advice.setUpdateTime(new Date());
         Example example = new Example(Advices.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("advicesId", advice.getAdvicesId());
         return advicesMapper.updateByExampleSelective(advice, example);
     }
 
@@ -50,16 +54,31 @@ public class AdvicesServiceImpl implements AdvicesService {
 
     @Override
     public PageData<Advices> queryLikeAdvices(Advices advice) {
-        PageHelper.startPage(advice.getPageNum(),advice.getPageSize());
-        List<Advices> list= advicesMapper.select(advice);
+        PageHelper.startPage(advice.getPageNum(), advice.getPageSize());
+        List<Advices> list = advicesMapper.select(advice);
         PageInfo<Advices> pageInfo = PageInfo.of(list);
         return new PageData<>(list, pageInfo.getTotal());
     }
 
     @Override
-    public PageData<Advices> allAdvices(PageParam pageParam) {
-        PageHelper.startPage(pageParam.getPageNum(),pageParam.getPageSize());
-        List<Advices> list = advicesMapper.selectAll();
+    public PageData<Advices> allAdvices(AdvicesParameter advicesParameter) {
+
+        PageHelper.startPage(advicesParameter.getPageNum(), advicesParameter.getPageSize());
+        Example example = new Example(Advices.class);
+        Example.Criteria criteria = example.createCriteria();
+
+        if (StringUtils.isNotBlank(advicesParameter.getAdvicesType())) {
+            criteria.andLike("advicesType", "%" + advicesParameter.getAdvicesType() + "%");
+        }
+        if (StringUtils.isNotBlank(advicesParameter.getAdvicesName())) {
+            criteria.andLike("advicesName", "%" + advicesParameter.getAdvicesName() + "%");
+        }
+        if (StringUtils.isNotBlank(advicesParameter.getAdvicesNumber())) {
+            criteria.andLike("advicesNumber", "%" + advicesParameter.getAdvicesNumber() + "%");
+        }
+
+        List<Advices> list = advicesMapper.selectByExample(example);
+        list.sort(Comparator.comparing(Advices::getCreateTime).reversed());
         PageInfo<Advices> pageInfo = PageInfo.of(list);
         return new PageData<>(list, pageInfo.getTotal());
     }

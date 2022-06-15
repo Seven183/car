@@ -2,9 +2,9 @@ package cn.lvhaosir.controller;
 
 
 import cn.lvhaosir.entity.Advices;
-import cn.lvhaosir.utils.PageData;
-import cn.lvhaosir.utils.PageParam;
+import cn.lvhaosir.paramater.AdvicesParameter;
 import cn.lvhaosir.service.AdvicesService;
+import cn.lvhaosir.utils.PageData;
 import cn.lvhaosir.utils.Result;
 import cn.lvhaosir.utils.SystemException;
 import cn.lvhaosir.utils.SystemSuccess;
@@ -25,9 +25,9 @@ public class AdvicesController {
         return Result.ok(add == 1 ? SystemSuccess.ADD_DRIVER_SUCCESS.getMessage() : SystemException.ADD_DRIVER_FAILED.getMessage());
     }
 
-    @GetMapping(value = "/deleteAdvice/{id}")
-    public Result<String> deleteAdvice(@PathVariable Integer id) {
-        Integer delete = advicesService.delete(id);
+    @GetMapping(value = "/deleteAdvice/{adviceId}")
+    public Result<String> deleteAdvice(@PathVariable Integer adviceId) {
+        Integer delete = advicesService.delete(adviceId);
         return Result.ok(delete == 1 ? SystemSuccess.DELETE_DRIVER_SUCCESS.getMessage() : SystemException.DELETE_DRIVER_FAILED.getMessage());
     }
 
@@ -37,9 +37,9 @@ public class AdvicesController {
         return Result.ok(update == 1 ? SystemSuccess.UPDATE_DRIVER_SUCCESS.getMessage() : SystemException.UPDATE_DRIVER_FAILED.getMessage());
     }
 
-    @GetMapping(value = "/select/{id}")
-    public Result<Advices> selectAdvicesById(@PathVariable Integer id) {
-        Advices advices = advicesService.selectAdvicesById(id);
+    @GetMapping(value = "/select/{adviceId}")
+    public Result<Advices> selectAdvicesById(@PathVariable Integer adviceId) {
+        Advices advices = advicesService.selectAdvicesById(adviceId);
         return Result.ok(advices);
     }
 
@@ -50,8 +50,8 @@ public class AdvicesController {
     }
 
     @GetMapping(value = "/allAdvices")
-    public Result<PageData<Advices>> allAdvices(PageParam pageParam) {
-        PageData<Advices> advicesPageData = advicesService.allAdvices(pageParam);
+    public Result<PageData<Advices>> allAdvices(AdvicesParameter advicesParameter) {
+        PageData<Advices> advicesPageData = advicesService.allAdvices(advicesParameter);
         return Result.ok(advicesPageData);
     }
 }

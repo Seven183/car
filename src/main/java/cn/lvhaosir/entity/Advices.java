@@ -17,9 +17,23 @@ public class Advices extends PageParam implements Serializable {
     @Column(name = "advices_id")
     private Integer advicesId;
 
-    private String title;
+    @Column(name = "advices_type")
+    private String advicesType;
 
-    private String content;
+    @Column(name = "advices_name")
+    private String advicesName;
+
+    @Column(name = "advices_number")
+    private String advicesNumber;
+
+    @Column(name = "advices_quantity")
+    private Integer advicesQuantity;
+
+    @Column(name = "advices_price_amount")
+    private Double advicesPriceAmount;
+
+    @Column(name = "advices_full_amount")
+    private Double advicesFullAmount;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Column(name = "create_time")
