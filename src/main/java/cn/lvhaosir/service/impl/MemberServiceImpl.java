@@ -1,18 +1,20 @@
 package cn.lvhaosir.service.impl;
 
 
-import cn.lvhaosir.entity.Advices;
 import cn.lvhaosir.entity.Member;
 import cn.lvhaosir.mapper.MemberMapper;
+import cn.lvhaosir.paramater.MemberParameter;
 import cn.lvhaosir.service.MemberService;
 import cn.lvhaosir.utils.PageData;
-import cn.lvhaosir.utils.PageParam;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 
@@ -24,6 +26,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Integer add(Member member) {
+        member.setCreateTime(new Date());
+        member.setUpdateTime(new Date());
         return memberMapper.insert(member);
     }
 
@@ -34,16 +38,16 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Integer update(Member member) {
-        Example example = new Example(Advices.class);
+        Example example = new Example(Member.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("memberName",member.getMemberName());
+        criteria.andEqualTo("memberId",member.getMemberId());
         return memberMapper.updateByExampleSelective(member, example);
     }
 
     @Override
-    public Member selectMemberById(Integer id) {
+    public Member selectMemberById(Integer memberId) {
         Member member = new Member();
-        member.setId(id);
+        member.setMemberId(memberId);
         return memberMapper.selectOne(member);
     }
 
@@ -56,9 +60,24 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public PageData<Member> allMember(PageParam pageParam) {
-        PageHelper.startPage(pageParam.getPageNum(),pageParam.getPageSize());
-        List<Member> list = memberMapper.selectAll();
+    public PageData<Member> allMember(MemberParameter memberParameter) {
+
+        PageHelper.startPage(memberParameter.getPageNum(),memberParameter.getPageSize());
+        Example example = new Example(Member.class);
+        Example.Criteria criteria = example.createCriteria();
+
+        if (StringUtils.isNotBlank(memberParameter.getMemberName())) {
+            criteria.andLike("memberName", "%" + memberParameter.getMemberName() + "%");
+        }
+        if (StringUtils.isNotBlank(memberParameter.getMemberSex())) {
+            criteria.andLike("memberSex", "%" + memberParameter.getMemberSex() + "%");
+        }
+        if (StringUtils.isNotBlank(memberParameter.getPhone())) {
+            criteria.andLike("phone", "%" + memberParameter.getPhone() + "%");
+        }
+
+        List<Member> list = memberMapper.selectByExample(example);
+        list.sort(Comparator.comparing(Member::getUpdateTime).reversed());
         PageInfo<Member> pageInfo = PageInfo.of(list);
         return new PageData<>(list, pageInfo.getTotal());
     }

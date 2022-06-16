@@ -2,9 +2,9 @@ package cn.lvhaosir.controller;
 
 
 import cn.lvhaosir.entity.Drivers;
-import cn.lvhaosir.utils.PageData;
-import cn.lvhaosir.utils.PageParam;
+import cn.lvhaosir.paramater.DriverParameter;
 import cn.lvhaosir.service.DriversService;
+import cn.lvhaosir.utils.PageData;
 import cn.lvhaosir.utils.Result;
 import cn.lvhaosir.utils.SystemException;
 import cn.lvhaosir.utils.SystemSuccess;
@@ -28,9 +28,9 @@ public class DriversController {
         return Result.ok(add == 1 ? SystemSuccess.ADD_DRIVER_SUCCESS.getMessage() : SystemException.ADD_DRIVER_FAILED.getMessage());
     }
 
-	@GetMapping(value = "/deleteDriver/{id}")
-	public Result<String> deleteDriver(@PathVariable Integer id) {
-		Integer delete = driversService.delete(id);
+	@GetMapping(value = "/deleteDriver/{driverId}")
+	public Result<String> deleteDriver(@PathVariable Integer driverId) {
+		Integer delete = driversService.delete(driverId);
 		return Result.ok(delete == 1 ? SystemSuccess.DELETE_DRIVER_SUCCESS.getMessage() : SystemException.DELETE_DRIVER_FAILED.getMessage());
 	}
 
@@ -46,16 +46,16 @@ public class DriversController {
 		return Result.ok(queryById);
 	}
 
-    @GetMapping(value = "/allDrivers")
-    public Result<PageData<Drivers>> allDrivers(PageParam pageParam) {
-		PageData<Drivers> queryPageList = driversService.allDrivers(pageParam);
-        return Result.ok(queryPageList);
-    }
-
     @GetMapping(value = "/queryLikeDrivers")
     public Result<PageData<Drivers>> queryLikeDrivers(Drivers driver) {
-		PageData<Drivers> pageDate = driversService.queryLikeDrivers(driver);
-		return Result.ok(pageDate);
+        PageData<Drivers> pageDate = driversService.queryLikeDrivers(driver);
+        return Result.ok(pageDate);
+    }
+
+    @GetMapping(value = "/allDrivers")
+    public Result<PageData<Drivers>> allDrivers(DriverParameter driverParameter) {
+		PageData<Drivers> queryPageList = driversService.allDrivers(driverParameter);
+        return Result.ok(queryPageList);
     }
 
 

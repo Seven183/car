@@ -14,16 +14,23 @@ public class Member extends PageParam implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
     @Column(name = "member_id")
     private Integer memberId;
 
     @Column(name = "member_name")
     private String memberName;
 
+    @Column(name = "member_sex")
+    private String memberSex;
+
+    private Integer age;
+
+    private String address;
+
     @Column(name = "phone")
     private String phone;
+
+    private String photo;
 
     @Column(name = "recharge_amount")
     private Double rechargeAmount;

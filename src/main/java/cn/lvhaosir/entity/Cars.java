@@ -17,17 +17,17 @@ public class Cars extends PageParam implements Serializable {
     @Column(name = "car_id")
     private Integer carId;
 
+    @Column(name = "car_brand")
+    private String carBrand;
+
+    @Column(name = "car_name")
+    private String carName;
+
     @Column(name = "car_number")
     private String carNumber;
 
     @Column(name = "engine_number")
     private String engineNumber;
-
-    @Column(name = "start_time")
-    private String startTime;
-
-    @Column(name = "end_time")
-    private String endTime;
 
     @Column(name = "driver_id")
     private Integer driverId;
@@ -35,6 +35,10 @@ public class Cars extends PageParam implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Column(name = "create_time")
     private Date createTime;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @Column(name = "update_time")
+    private Date updateTime;
 
     private String photo;
 

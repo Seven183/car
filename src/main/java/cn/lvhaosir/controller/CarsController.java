@@ -1,9 +1,9 @@
 package cn.lvhaosir.controller;
 
 import cn.lvhaosir.entity.Cars;
-import cn.lvhaosir.utils.PageData;
-import cn.lvhaosir.utils.PageParam;
+import cn.lvhaosir.paramater.CarParameter;
 import cn.lvhaosir.service.CarsService;
+import cn.lvhaosir.utils.PageData;
 import cn.lvhaosir.utils.Result;
 import cn.lvhaosir.utils.SystemException;
 import cn.lvhaosir.utils.SystemSuccess;
@@ -49,8 +49,8 @@ public class CarsController {
     }
 
     @GetMapping(value = "/allCars")
-    public Result<PageData<Cars>> allCars(PageParam pageParam) {
-        PageData<Cars> carsPageData = carsService.allCars(pageParam);
+    public Result<PageData<Cars>> allCars(CarParameter carParameter) {
+        PageData<Cars> carsPageData = carsService.allCars(carParameter);
         return Result.ok(carsPageData);
     }
 }

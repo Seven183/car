@@ -78,7 +78,7 @@ public class AdvicesServiceImpl implements AdvicesService {
         }
 
         List<Advices> list = advicesMapper.selectByExample(example);
-        list.sort(Comparator.comparing(Advices::getCreateTime).reversed());
+        list.sort(Comparator.comparing(Advices::getUpdateTime).reversed());
         PageInfo<Advices> pageInfo = PageInfo.of(list);
         return new PageData<>(list, pageInfo.getTotal());
     }

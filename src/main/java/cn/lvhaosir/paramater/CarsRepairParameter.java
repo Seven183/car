@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 public class CarsRepairParameter extends PageParam {
 
+    private String carsRepairType;
     private String userName;
     private String phone;
     private String carNumber;

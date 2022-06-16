@@ -1,8 +1,8 @@
 package cn.lvhaosir.service;
 
 import cn.lvhaosir.entity.Cars;
+import cn.lvhaosir.paramater.CarParameter;
 import cn.lvhaosir.utils.PageData;
-import cn.lvhaosir.utils.PageParam;
 
 public interface CarsService {
 
@@ -16,6 +16,6 @@ public interface CarsService {
 
 	public PageData<Cars> queryLikeCars(Cars car);
 
-	public PageData<Cars> allCars(PageParam pageParam);
+	public PageData<Cars> allCars(CarParameter carParameter);
 
 }

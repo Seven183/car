@@ -68,6 +68,9 @@ public class CarsRepairServiceImpl implements CarsRepairService {
         PageHelper.startPage(carsRepairParameter.getPageNum(), carsRepairParameter.getPageSize());
         Example example = new Example(CarsRepair.class);
         Example.Criteria criteria = example.createCriteria();
+        if (StringUtils.isNotBlank(carsRepairParameter.getCarsRepairType())) {
+            criteria.andLike("carsRepairType", "%" + carsRepairParameter.getCarsRepairType() + "%");
+        }
         if (StringUtils.isNotBlank(carsRepairParameter.getUserName())) {
             criteria.andLike("userName", "%" + carsRepairParameter.getUserName() + "%");
         }
@@ -85,7 +88,7 @@ public class CarsRepairServiceImpl implements CarsRepairService {
             criteria.andBetween("createTime", "1970-01-01", DateUtils.dateIncrease(DateUtils.strToDate(carsRepairParameter.getEndCreateTime()),1));
         }
         List<CarsRepair> list = carsRepairMapper.selectByExample(example);
-        list.sort(Comparator.comparing(CarsRepair::getCreateTime).reversed());
+        list.sort(Comparator.comparing(CarsRepair::getUpdateTime).reversed());
         PageInfo<CarsRepair> pageInfo = PageInfo.of(list);
         return new PageData<>(list, pageInfo.getTotal());
     }
