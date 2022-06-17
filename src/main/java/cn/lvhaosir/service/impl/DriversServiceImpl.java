@@ -28,6 +28,7 @@ public class DriversServiceImpl implements DriversService {
 	public Integer add(Drivers driver) {
 		driver.setCreateTime(new Date());
 		driver.setUpdateTime(new Date());
+		driver.setIsDelete(0);
 		return driversMapper.insert(driver);
 	}
 
@@ -65,6 +66,9 @@ public class DriversServiceImpl implements DriversService {
 		Example example = new Example(Drivers.class);
 		Example.Criteria criteria = example.createCriteria();
 
+		if (StringUtils.isNotBlank(driverParameter.getCarNumber())) {
+			criteria.andLike("carNumber", "%" + driverParameter.getCarNumber() + "%");
+		}
 		if (StringUtils.isNotBlank(driverParameter.getDriverName())) {
 			criteria.andLike("driverName", "%" + driverParameter.getDriverName() + "%");
 		}

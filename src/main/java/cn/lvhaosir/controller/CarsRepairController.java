@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/carsRepair")
@@ -44,15 +45,21 @@ public class CarsRepairController {
         return Result.ok(carsRepair);
     }
 
-    @GetMapping(value = "/queryLike")
-    public Result<PageData<CarsRepair>> queryLikeCarsRepair(CarsRepair carsRepair) {
-        PageData<CarsRepair> carsRepairPageData = carsRepairService.queryLikeCarsRepair(carsRepair);
-        return Result.ok(carsRepairPageData);
-    }
-
     @GetMapping(value = "/allCarsRepairs")
     public Result<PageData<CarsRepair>> queryAllCarsRepairs(CarsRepairParameter carsRepairParameter) throws ParseException {
         PageData<CarsRepair> queryParamList = carsRepairService.queryAllCarsRepairs(carsRepairParameter);
         return Result.ok(queryParamList);
+    }
+
+    @GetMapping(value = "/selectLikeCarNumber")
+    public Result<Set<String>> selectLikeCarNumber(String carNumber) {
+        Set<String> listCarNumbers = carsRepairService.selectLikeCarNumber(carNumber);
+        return Result.ok(listCarNumbers);
+    }
+
+    @GetMapping(value = "/selectCarNumbers")
+    public Result<Set<String>> selectCarNumbers() {
+        Set<String> listCarNumbers = carsRepairService.selectCarNumbers();
+        return Result.ok(listCarNumbers);
     }
 }

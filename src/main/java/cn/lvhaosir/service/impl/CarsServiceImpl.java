@@ -27,6 +27,8 @@ public class CarsServiceImpl implements CarsService {
     public Integer add(Cars car) {
         car.setCreateTime(new Date());
         car.setUpdateTime(new Date());
+        car.setStatus(0);
+        car.setIsDelete(0);
         return carsMapper.insert(car);
     }
 

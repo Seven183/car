@@ -28,6 +28,7 @@ public class AdvicesServiceImpl implements AdvicesService {
     public Integer add(Advices advice) {
         advice.setCreateTime(new Date());
         advice.setUpdateTime(new Date());
+        advice.setIsDelete(0);
         return advicesMapper.insert(advice);
     }
 
@@ -67,6 +68,9 @@ public class AdvicesServiceImpl implements AdvicesService {
         Example example = new Example(Advices.class);
         Example.Criteria criteria = example.createCriteria();
 
+        if (StringUtils.isNotBlank(advicesParameter.getCarNumber())) {
+            criteria.andLike("carNumber", "%" + advicesParameter.getCarNumber() + "%");
+        }
         if (StringUtils.isNotBlank(advicesParameter.getAdvicesType())) {
             criteria.andLike("advicesType", "%" + advicesParameter.getAdvicesType() + "%");
         }

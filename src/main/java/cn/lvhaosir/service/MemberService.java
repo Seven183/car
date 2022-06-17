@@ -4,6 +4,8 @@ import cn.lvhaosir.entity.Member;
 import cn.lvhaosir.paramater.MemberParameter;
 import cn.lvhaosir.utils.PageData;
 
+import java.util.Set;
+
 public interface MemberService {
 
     public Integer add(Member member);
@@ -14,7 +16,7 @@ public interface MemberService {
 
     public Member selectMemberById(Integer memberId);
 
-    public PageData<Member> queryLikeMembers(Member member);
-
     public PageData<Member> allMember(MemberParameter memberParameter);
+
+    public Set<String> selectCarNumbers();
 }

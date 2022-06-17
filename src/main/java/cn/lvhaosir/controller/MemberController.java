@@ -11,6 +11,8 @@ import cn.lvhaosir.utils.SystemSuccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 
 @RestController
 @RequestMapping("/member")
@@ -43,15 +45,15 @@ public class MemberController {
         return Result.ok(member);
     }
 
-    @GetMapping(value = "/queryLikeMember")
-    public Result<PageData<Member>> queryLikeAdvices(Member member) {
-        PageData<Member> advicesPageData = memberService.queryLikeMembers(member);
-        return Result.ok(advicesPageData);
-    }
-
     @GetMapping(value = "/allMember")
     public Result<PageData<Member>> allMember(MemberParameter memberParameter) {
         PageData<Member> memberPageData = memberService.allMember(memberParameter);
         return Result.ok(memberPageData);
+    }
+
+    @GetMapping(value = "/selectCarNumbers")
+    public Result<Set<String>> selectCarNumbers() {
+        Set<String> advicesPageData = memberService.selectCarNumbers();
+        return Result.ok(advicesPageData);
     }
 }

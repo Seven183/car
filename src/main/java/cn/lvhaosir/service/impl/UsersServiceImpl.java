@@ -46,6 +46,8 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public Integer add(Users model) {
+        model.setStatus(0);
+        model.setIsDelete(0);
         return baseMapper.insert(model);
     }
 

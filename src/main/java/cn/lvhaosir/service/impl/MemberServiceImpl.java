@@ -13,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @Service
@@ -28,6 +26,8 @@ public class MemberServiceImpl implements MemberService {
     public Integer add(Member member) {
         member.setCreateTime(new Date());
         member.setUpdateTime(new Date());
+        member.setStatus(0);
+        member.setIsDelete(0);
         return memberMapper.insert(member);
     }
 
@@ -52,11 +52,9 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public PageData<Member> queryLikeMembers(Member member) {
-        PageHelper.startPage(member.getPageNum(),member.getPageSize());
-        List<Member> list= memberMapper.select(member);
-        PageInfo<Member> pageInfo = PageInfo.of(list);
-        return new PageData<>(list, pageInfo.getTotal());
+    public Set<String> selectCarNumbers() {
+        List<String> list = memberMapper.selectCarNumbers();
+        return new HashSet<String>(list);
     }
 
     @Override
@@ -66,6 +64,9 @@ public class MemberServiceImpl implements MemberService {
         Example example = new Example(Member.class);
         Example.Criteria criteria = example.createCriteria();
 
+        if (StringUtils.isNotBlank(memberParameter.getCarNumber())) {
+            criteria.andLike("carNumber", "%" + memberParameter.getCarNumber() + "%");
+        }
         if (StringUtils.isNotBlank(memberParameter.getMemberName())) {
             criteria.andLike("memberName", "%" + memberParameter.getMemberName() + "%");
         }
@@ -75,7 +76,9 @@ public class MemberServiceImpl implements MemberService {
         if (StringUtils.isNotBlank(memberParameter.getPhone())) {
             criteria.andLike("phone", "%" + memberParameter.getPhone() + "%");
         }
-
+        if (StringUtils.isNotBlank(memberParameter.getAddress())) {
+            criteria.andLike("address", "%" + memberParameter.getAddress() + "%");
+        }
         List<Member> list = memberMapper.selectByExample(example);
         list.sort(Comparator.comparing(Member::getUpdateTime).reversed());
         PageInfo<Member> pageInfo = PageInfo.of(list);

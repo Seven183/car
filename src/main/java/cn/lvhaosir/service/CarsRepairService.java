@@ -6,6 +6,7 @@ import cn.lvhaosir.paramater.CarsRepairParameter;
 import cn.lvhaosir.utils.PageData;
 
 import java.text.ParseException;
+import java.util.Set;
 
 
 public interface CarsRepairService {
@@ -18,7 +19,9 @@ public interface CarsRepairService {
 
 	public CarsRepair selectCarsRepairById(Integer id);
 
-	public PageData<CarsRepair> queryLikeCarsRepair(CarsRepair carsRepair);
-
 	public PageData<CarsRepair> queryAllCarsRepairs(CarsRepairParameter carsRepairParameter) throws ParseException;
+
+	public Set<String> selectLikeCarNumber(String carNumber);
+
+	public Set<String> selectCarNumbers();
 }
