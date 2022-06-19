@@ -24,12 +24,6 @@ public class Member extends PageParam implements Serializable {
     private String memberName;
 
     /**
-     * 车牌号
-     */
-    @Column(name = "car_number")
-    private String carNumber;
-
-    /**
      * 会员性别
      */
     @Column(name = "member_sex")
@@ -54,7 +48,8 @@ public class Member extends PageParam implements Serializable {
     /**
      * 会员照片
      */
-    private String photo;
+    @Column(name = "member_photo")
+    private String memberPhoto;
 
     /**
      * 会员充值金额
@@ -93,4 +88,36 @@ public class Member extends PageParam implements Serializable {
      */
     @Column(name = "is_delete")
     private Integer isDelete;
+
+
+    /**
+     * 车牌号
+     */
+    @Column(name = "car_number")
+    private String carNumber;
+
+
+    /**
+     * 车辆品牌
+     */
+    @Column(name = "car_brand")
+    private String carBrand;
+
+    /**
+     * 车辆名称
+     */
+    @Column(name = "car_name")
+    private String carName;
+
+    /**
+     * 车架号
+     */
+    @Column(name = "engine_number")
+    private String engineNumber;
+
+    /**
+     * 汽车图片
+     */
+    @Column(name = "car_photo")
+    private String carPhoto;
 }

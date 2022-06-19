@@ -10,4 +10,5 @@ public class AdvicesParameter extends PageParam {
     private String advicesType;
     private String advicesName;
     private String advicesNumber;
+    private Integer isDelete;
 }

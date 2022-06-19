@@ -45,12 +45,6 @@ public class Drivers extends PageParam implements Serializable {
     private String phone;
 
     /**
-     * 驾驶人车辆iD
-     */
-    @Column(name = "id_card")
-    private String idCard;
-
-    /**
      * 驾驶人地址
      */
     private String address;
@@ -58,7 +52,8 @@ public class Drivers extends PageParam implements Serializable {
     /**
      * 驾驶人照片
      */
-    private String photo;
+    @Column(name = "driver_photo")
+    private String driverPhoto;
 
     /**
      * 创建时间
@@ -79,4 +74,28 @@ public class Drivers extends PageParam implements Serializable {
      */
     @Column(name = "is_delete")
     private Integer isDelete;
+
+    /**
+     * 车辆品牌
+     */
+    @Column(name = "car_brand")
+    private String carBrand;
+
+    /**
+     * 车辆名称
+     */
+    @Column(name = "car_name")
+    private String carName;
+
+    /**
+     * 车架号
+     */
+    @Column(name = "engine_number")
+    private String engineNumber;
+
+    /**
+     * 汽车图片
+     */
+    @Column(name = "car_photo")
+    private String carPhoto;
 }

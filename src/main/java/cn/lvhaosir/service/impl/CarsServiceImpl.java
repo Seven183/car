@@ -34,7 +34,14 @@ public class CarsServiceImpl implements CarsService {
 
     @Override
     public Integer delete(Integer id) {
-        return carsMapper.deleteByPrimaryKey(id);
+        Cars cars = new Cars();
+        cars.setIsDelete(1);
+        cars.setUpdateTime(new Date());
+        Example example = new Example(Cars.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("carId", id);
+        return carsMapper.updateByExampleSelective(cars, example);
+//        return carsMapper.deleteByPrimaryKey(id);
     }
 
     @Override
@@ -66,6 +73,11 @@ public class CarsServiceImpl implements CarsService {
         Example example = new Example(Cars.class);
         Example.Criteria criteria = example.createCriteria();
 
+        if (carParameter.getIsDelete() != null) {
+            criteria.andEqualTo("isDelete", carParameter.getIsDelete());
+        } else {
+            criteria.andEqualTo("isDelete", 0);
+        }
         if (StringUtils.isNotBlank(carParameter.getCarBrand())) {
             criteria.andLike("carBrand", "%" + carParameter.getCarBrand() + "%");
         }

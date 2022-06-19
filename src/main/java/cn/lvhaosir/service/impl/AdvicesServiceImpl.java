@@ -34,7 +34,14 @@ public class AdvicesServiceImpl implements AdvicesService {
 
     @Override
     public Integer delete(Integer id) {
-        return advicesMapper.deleteByPrimaryKey(id);
+        Advices advices = new Advices();
+        advices.setIsDelete(1);
+        advices.setUpdateTime(new Date());
+        Example example = new Example(Advices.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("advicesId", id);
+        return advicesMapper.updateByExampleSelective(advices, example);
+//        return advicesMapper.deleteByPrimaryKey(id);
     }
 
     @Override
@@ -67,6 +74,12 @@ public class AdvicesServiceImpl implements AdvicesService {
         PageHelper.startPage(advicesParameter.getPageNum(), advicesParameter.getPageSize());
         Example example = new Example(Advices.class);
         Example.Criteria criteria = example.createCriteria();
+
+        if (advicesParameter.getIsDelete() != null) {
+            criteria.andEqualTo("isDelete", advicesParameter.getIsDelete());
+        } else {
+            criteria.andEqualTo("isDelete", 0);
+        }
 
         if (StringUtils.isNotBlank(advicesParameter.getCarNumber())) {
             criteria.andLike("carNumber", "%" + advicesParameter.getCarNumber() + "%");

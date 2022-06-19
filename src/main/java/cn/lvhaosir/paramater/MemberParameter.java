@@ -11,4 +11,8 @@ public class MemberParameter extends PageParam {
     private String memberName;
     private String memberSex;
     private String phone;
+    private Integer isDelete;
+    private String carBrand;
+    private String carName;
+    private String engineNumber;
 }

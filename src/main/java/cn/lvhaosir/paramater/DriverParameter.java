@@ -11,4 +11,8 @@ public class DriverParameter extends PageParam {
     private String sex;
     private String phone;
     private String address;
+    private Integer isDelete;
+    private String carBrand;
+    private String carName;
+    private String engineNumber;
 }

@@ -3,6 +3,7 @@ package cn.lvhaosir.controller;
 
 import cn.lvhaosir.entity.CarsRepair;
 import cn.lvhaosir.paramater.CarsRepairParameter;
+import cn.lvhaosir.result.CarsRepairDetails;
 import cn.lvhaosir.service.CarsRepairService;
 import cn.lvhaosir.utils.PageData;
 import cn.lvhaosir.utils.Result;
@@ -51,15 +52,33 @@ public class CarsRepairController {
         return Result.ok(queryParamList);
     }
 
-    @GetMapping(value = "/selectLikeCarNumber")
-    public Result<Set<String>> selectLikeCarNumber(String carNumber) {
-        Set<String> listCarNumbers = carsRepairService.selectLikeCarNumber(carNumber);
-        return Result.ok(listCarNumbers);
-    }
-
+    /***
+     * 根据carNumber分组
+     * @return
+     */
     @GetMapping(value = "/selectCarNumbers")
     public Result<Set<String>> selectCarNumbers() {
         Set<String> listCarNumbers = carsRepairService.selectCarNumbers();
         return Result.ok(listCarNumbers);
+    }
+
+    /***
+     *  根据 carsRepairId 操作 status 值
+     * @return
+     */
+    @GetMapping(value = "/statusOperate")
+    public Result<Integer> statusOperate(Integer carsRepairId, Integer status) {
+        Integer update = carsRepairService.statusOperate(carsRepairId, status);
+        return Result.ok(update);
+    }
+
+    /***
+     * 根据carNumber createTime 得到详细信息
+     * @return
+     */
+    @GetMapping(value = "/detailsByCarNumber/{carNumber}")
+    public Result<CarsRepairDetails> detailsByCarNumber(@PathVariable String carNumber) {
+        CarsRepairDetails carsRepairDetails = carsRepairService.detailsByCarNumber(carNumber);
+        return Result.ok(carsRepairDetails);
     }
 }

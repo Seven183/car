@@ -10,4 +10,5 @@ public class CarParameter extends PageParam {
     private String carName;
     private String carNumber;
     private String engineNumber;
+    private Integer isDelete;
 }

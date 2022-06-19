@@ -33,8 +33,15 @@ public class DriversServiceImpl implements DriversService {
 	}
 
 	@Override
-	public Integer delete(Object driverId) {
-		return driversMapper.deleteByPrimaryKey(driverId);
+	public Integer delete(Integer driverId) {
+		Drivers drivers = new Drivers();
+		drivers.setIsDelete(1);
+		drivers.setUpdateTime(new Date());
+		Example example = new Example(Drivers.class);
+		Example.Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("driverId", driverId);
+		return driversMapper.updateByExampleSelective(drivers, example);
+//		return driversMapper.deleteByPrimaryKey(driverId);
 	}
 
 	@Override
@@ -66,6 +73,11 @@ public class DriversServiceImpl implements DriversService {
 		Example example = new Example(Drivers.class);
 		Example.Criteria criteria = example.createCriteria();
 
+		if (driverParameter.getIsDelete() != null) {
+			criteria.andEqualTo("isDelete", driverParameter.getIsDelete());
+		} else {
+			criteria.andEqualTo("isDelete", 0);
+		}
 		if (StringUtils.isNotBlank(driverParameter.getCarNumber())) {
 			criteria.andLike("carNumber", "%" + driverParameter.getCarNumber() + "%");
 		}
@@ -80,6 +92,9 @@ public class DriversServiceImpl implements DriversService {
 		}
 		if (StringUtils.isNotBlank(driverParameter.getAddress())) {
 			criteria.andLike("address", "%" + driverParameter.getAddress()+ "%");
+		}
+		if (StringUtils.isNotBlank(driverParameter.getCarBrand())) {
+			criteria.andLike("carBrand", "%" + driverParameter.getCarBrand()+ "%");
 		}
 		List<Drivers> list = driversMapper.selectByExample(example);
 		list.sort(Comparator.comparing(Drivers::getUpdateTime).reversed());

@@ -54,12 +54,6 @@ public class CarsRepair extends PageParam implements Serializable {
     private String carsRepairText;
 
     /**
-     * 汽车id
-     */
-    @Column(name = "car_id")
-    private Integer carId;
-
-    /**
      * 创建时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

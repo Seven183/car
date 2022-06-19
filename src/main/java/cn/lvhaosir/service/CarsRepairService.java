@@ -3,6 +3,7 @@ package cn.lvhaosir.service;
 
 import cn.lvhaosir.entity.CarsRepair;
 import cn.lvhaosir.paramater.CarsRepairParameter;
+import cn.lvhaosir.result.CarsRepairDetails;
 import cn.lvhaosir.utils.PageData;
 
 import java.text.ParseException;
@@ -21,7 +22,9 @@ public interface CarsRepairService {
 
 	public PageData<CarsRepair> queryAllCarsRepairs(CarsRepairParameter carsRepairParameter) throws ParseException;
 
-	public Set<String> selectLikeCarNumber(String carNumber);
-
 	public Set<String> selectCarNumbers();
+
+	public Integer statusOperate(Integer carsRepairId, Integer status);
+
+	public CarsRepairDetails detailsByCarNumber(String carNumber);
 }

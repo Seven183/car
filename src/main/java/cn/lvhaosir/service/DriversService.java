@@ -9,7 +9,7 @@ public interface DriversService{
 
 	public Integer add(Drivers driver);
 
-	public Integer delete(Object driverId);
+	public Integer delete(Integer driverId);
 
 	public Integer update(Drivers driver);
 

@@ -33,7 +33,14 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Integer delete(Integer id) {
-        return memberMapper.deleteByPrimaryKey(id);
+        Member member = new Member();
+        member.setIsDelete(1);
+        member.setUpdateTime(new Date());
+        Example example = new Example(Member.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("memberId", id);
+        return memberMapper.updateByExampleSelective(member, example);
+//        return memberMapper.deleteByPrimaryKey(id);
     }
 
     @Override
@@ -64,6 +71,11 @@ public class MemberServiceImpl implements MemberService {
         Example example = new Example(Member.class);
         Example.Criteria criteria = example.createCriteria();
 
+        if (memberParameter.getIsDelete() != null) {
+            criteria.andEqualTo("isDelete", memberParameter.getIsDelete());
+        } else {
+            criteria.andEqualTo("isDelete", 0);
+        }
         if (StringUtils.isNotBlank(memberParameter.getCarNumber())) {
             criteria.andLike("carNumber", "%" + memberParameter.getCarNumber() + "%");
         }
@@ -78,6 +90,9 @@ public class MemberServiceImpl implements MemberService {
         }
         if (StringUtils.isNotBlank(memberParameter.getAddress())) {
             criteria.andLike("address", "%" + memberParameter.getAddress() + "%");
+        }
+        if (StringUtils.isNotBlank(memberParameter.getCarBrand())) {
+            criteria.andLike("carBrand", "%" + memberParameter.getCarBrand()+ "%");
         }
         List<Member> list = memberMapper.selectByExample(example);
         list.sort(Comparator.comparing(Member::getUpdateTime).reversed());

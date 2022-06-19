@@ -12,4 +12,6 @@ public class CarsRepairParameter extends PageParam {
     private String carNumber;
     private String startCreateTime;
     private String endCreateTime;
+    private Integer isDelete;
+    private String status;
 }
