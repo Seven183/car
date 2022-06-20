@@ -15,4 +15,5 @@ public class DriverParameter extends PageParam {
     private String carBrand;
     private String carName;
     private String engineNumber;
+    private String status;
 }

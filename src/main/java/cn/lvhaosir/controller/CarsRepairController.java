@@ -3,7 +3,6 @@ package cn.lvhaosir.controller;
 
 import cn.lvhaosir.entity.CarsRepair;
 import cn.lvhaosir.paramater.CarsRepairParameter;
-import cn.lvhaosir.result.CarsRepairDetails;
 import cn.lvhaosir.service.CarsRepairService;
 import cn.lvhaosir.utils.PageData;
 import cn.lvhaosir.utils.Result;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -73,12 +73,12 @@ public class CarsRepairController {
     }
 
     /***
-     * 根据carNumber createTime 得到详细信息
+     * 根据carNumber得到详细信息
      * @return
      */
-    @GetMapping(value = "/detailsByCarNumber/{carNumber}")
-    public Result<CarsRepairDetails> detailsByCarNumber(@PathVariable String carNumber) {
-        CarsRepairDetails carsRepairDetails = carsRepairService.detailsByCarNumber(carNumber);
+    @GetMapping(value = "/detailsByCarsRepairNumber/{carsRepairNumber}")
+    public Result<List<CarsRepair>> detailsByCarsRepairNumber(@PathVariable String carsRepairNumber) {
+        List<CarsRepair> carsRepairDetails = carsRepairService.detailsByCarsRepairNumber(carsRepairNumber);
         return Result.ok(carsRepairDetails);
     }
 }

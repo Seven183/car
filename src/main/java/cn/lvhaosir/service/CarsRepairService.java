@@ -3,10 +3,10 @@ package cn.lvhaosir.service;
 
 import cn.lvhaosir.entity.CarsRepair;
 import cn.lvhaosir.paramater.CarsRepairParameter;
-import cn.lvhaosir.result.CarsRepairDetails;
 import cn.lvhaosir.utils.PageData;
 
 import java.text.ParseException;
+import java.util.List;
 import java.util.Set;
 
 
@@ -26,5 +26,5 @@ public interface CarsRepairService {
 
 	public Integer statusOperate(Integer carsRepairId, Integer status);
 
-	public CarsRepairDetails detailsByCarNumber(String carNumber);
+	public List<CarsRepair> detailsByCarsRepairNumber(String carsRepairNumber);
 }

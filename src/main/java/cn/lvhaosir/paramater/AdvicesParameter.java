@@ -11,4 +11,5 @@ public class AdvicesParameter extends PageParam {
     private String advicesName;
     private String advicesNumber;
     private Integer isDelete;
+    private String status;
 }

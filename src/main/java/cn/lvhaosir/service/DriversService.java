@@ -15,6 +15,8 @@ public interface DriversService{
 
 	public Drivers selectDriverById(Integer driverId);
 
+	public Drivers selectDriverByCarsRepairNumber(String carsRepairNumber);
+
 	public PageData<Drivers> queryLikeDrivers(Drivers driver);
 
 	public PageData<Drivers> allDrivers(DriverParameter driverParameter);

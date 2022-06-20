@@ -37,9 +37,15 @@ public class AdvicesController {
         return Result.ok(update == 1 ? SystemSuccess.UPDATE_DRIVER_SUCCESS.getMessage() : SystemException.UPDATE_DRIVER_FAILED.getMessage());
     }
 
-    @GetMapping(value = "/select/{adviceId}")
+    @GetMapping(value = "/selectById/{adviceId}")
     public Result<Advices> selectAdvicesById(@PathVariable Integer adviceId) {
         Advices advices = advicesService.selectAdvicesById(adviceId);
+        return Result.ok(advices);
+    }
+
+    @GetMapping(value = "/selectByCarsRepairNumber/{carsRepairNumber}")
+    public Result<Advices> selectAdvicesByCarsRepairNumber(@PathVariable String carsRepairNumber) {
+        Advices advices = advicesService.selectAdvicesByCarsRepairNumber(carsRepairNumber);
         return Result.ok(advices);
     }
 

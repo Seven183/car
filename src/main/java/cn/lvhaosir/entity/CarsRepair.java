@@ -24,18 +24,6 @@ public class CarsRepair extends PageParam implements Serializable {
     private String carsRepairNumber;
 
     /**
-     * 用户名
-     */
-    @Column(name = "user_name")
-    private String userName;
-
-    /**
-     * 手机号
-     */
-    @Column(name = "phone")
-    private String phone;
-
-    /**
      * 车牌号
      */
     @Column(name = "car_number")
@@ -68,6 +56,13 @@ public class CarsRepair extends PageParam implements Serializable {
     private Date updateTime;
 
     /**
+     * 结束时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @Column(name = "end_time")
+    private Date endTime;
+
+    /**
      * 是否维修完成（0：没完成，1：完成）
      */
     @Column(name = "status")
@@ -78,4 +73,104 @@ public class CarsRepair extends PageParam implements Serializable {
      */
     @Column(name = "is_delete")
     private Integer isDelete;
+
+
+    /**
+     * 用户名
+     */
+    @Column(name = "user_name")
+    private String userName;
+
+    /**
+     * 手机号
+     */
+    @Column(name = "phone")
+    private String phone;
+
+    /**
+     * 驾驶人年龄
+     */
+    private Integer age;
+
+    /**
+     * 驾驶人性别
+     */
+    private String sex;
+
+    /**
+     * 驾驶人地址
+     */
+    private String address;
+
+    /**
+     * 用户照片
+     */
+    @Column(name = "user_photo")
+    private String userPhoto;
+
+
+
+    /**
+     * 车辆品牌
+     */
+    @Column(name = "car_brand")
+    private String carBrand;
+
+    /**
+     * 车辆名称
+     */
+    @Column(name = "car_name")
+    private String carName;
+
+    /**
+     * 车架号
+     */
+    @Column(name = "engine_number")
+    private String engineNumber;
+
+    /**
+     * 汽车图片
+     */
+    @Column(name = "car_photo")
+    private String carPhoto;
+
+
+
+
+    /**
+     * 设备类型
+     */
+    @Column(name = "advices_type")
+    private String advicesType;
+
+    /**
+     * 设备名称
+     */
+    @Column(name = "advices_name")
+    private String advicesName;
+
+    /**
+     * 设备编号（sn 码）
+     */
+    @Column(name = "advices_number")
+    private String advicesNumber;
+
+    /**
+     * 设备数量
+     */
+    @Column(name = "advices_quantity")
+    private Integer advicesQuantity;
+
+    /**
+     * 设备单价金额
+     */
+    @Column(name = "advices_price_amount")
+    private Double advicesPriceAmount;
+
+    /**
+     * 设备总金额
+     */
+    @Column(name = "advices_full_amount")
+    private Double advicesFullAmount;
+
 }

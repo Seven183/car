@@ -1,14 +1,9 @@
 package cn.lvhaosir.service.impl;
 
 
-import cn.lvhaosir.entity.Advices;
 import cn.lvhaosir.entity.CarsRepair;
-import cn.lvhaosir.entity.Drivers;
-import cn.lvhaosir.mapper.AdvicesMapper;
 import cn.lvhaosir.mapper.CarsRepairMapper;
-import cn.lvhaosir.mapper.DriversMapper;
 import cn.lvhaosir.paramater.CarsRepairParameter;
-import cn.lvhaosir.result.CarsRepairDetails;
 import cn.lvhaosir.service.CarsRepairService;
 import cn.lvhaosir.utils.DateUtils;
 import cn.lvhaosir.utils.PageData;
@@ -17,23 +12,19 @@ import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import java.text.ParseException;
 import java.util.*;
 
 @Service
+@Transactional
 public class CarsRepairServiceImpl implements CarsRepairService {
 
 
     @Autowired
     private CarsRepairMapper carsRepairMapper;
-
-    @Autowired
-    private AdvicesMapper advicesMapper;
-
-    @Autowired
-    private DriversMapper driversMapper;
 
 
     @Override
@@ -75,72 +66,13 @@ public class CarsRepairServiceImpl implements CarsRepairService {
     }
 
     @Override
-    public CarsRepairDetails detailsByCarNumber(String carNumber) {
+    public List<CarsRepair> detailsByCarsRepairNumber(String carsRepairNumber) {
 
         Example carsRepair = new Example(CarsRepair.class);
         Example.Criteria criteriaCarsRepair = carsRepair.createCriteria();
-        criteriaCarsRepair.andEqualTo("carNumber", carNumber);
+        criteriaCarsRepair.andEqualTo("carsRepairNumber", carsRepairNumber);
         List<CarsRepair> listCarsRepair = carsRepairMapper.selectByExample(carsRepair);
-
-        Example advices = new Example(Advices.class);
-        Example.Criteria criteriaAdvices = advices.createCriteria();
-        criteriaAdvices.andEqualTo("carNumber", carNumber);
-        List<Advices> listAdvices = advicesMapper.selectByExample(advices);
-
-        Example exampleDrivers = new Example(Drivers.class);
-        Example.Criteria criteriaDrivers = exampleDrivers.createCriteria();
-        criteriaDrivers.andEqualTo("carNumber", carNumber);
-        List<Drivers> listDrivers = driversMapper.selectByExample(exampleDrivers);
-
-        CarsRepairDetails carsRepairDetails = new CarsRepairDetails();
-        String carsRepairNumber = "";
-        String carsRepairType = "";
-        String carsRepairText = "";
-        String createTime = "";
-        for (CarsRepair list : listCarsRepair) {
-            carsRepairNumber = carsRepairNumber + list.getCarsRepairNumber() + ",";
-            carsRepairType = carsRepairType + list.getCarsRepairType() + ",";
-            carsRepairText = carsRepairText + list.getCarsRepairText() + ",";
-            createTime = createTime + list.getCreateTime() + ",";
-        }
-
-        String advicesType = "";
-        String advicesName = "";
-        String advicesNumber = "";
-        String advicesQuantity = "";
-        String advicesPriceAmount = "";
-        String advicesFullAmount = "";
-        for (Advices list : listAdvices) {
-            advicesType = advicesType + list.getAdvicesType() + ",";
-            advicesName = advicesName + list.getAdvicesNumber() + ",";
-            advicesNumber = advicesNumber + list.getAdvicesName() + ",";
-            advicesQuantity = advicesQuantity + list.getAdvicesQuantity() + ",";
-            advicesPriceAmount = advicesPriceAmount + list.getAdvicesPriceAmount() + ",";
-            advicesFullAmount = advicesFullAmount + list.getAdvicesFullAmount() + ",";
-        }
-
-
-        String userName = "";
-        String age = "";
-        String sex = "";
-        String phone = "";
-        String address = "";
-        String carBrand = "";
-        String carName = "";
-        String engineNumber = "";
-        for (Drivers list : listDrivers ) {
-            userName = userName + list.getDriverName() + ",";
-            age = age + list.getAge() + ",";
-            sex = sex + list.getSex() + ",";
-            phone = phone + list.getPhone() + ",";
-            address = address + list.getAddress() + ",";
-            carBrand = carBrand + list.getCarBrand() + ",";
-            carName = carName + list.getCarName() + ",";
-            engineNumber = engineNumber + list.getEngineNumber() + ",";
-
-        }
-
-        return carsRepairDetails;
+        return listCarsRepair;
     }
 
     @Override

@@ -40,11 +40,17 @@ public class DriversController {
         return Result.ok(update == 1 ? SystemSuccess.UPDATE_DRIVER_SUCCESS.getMessage() : SystemException.UPDATE_DRIVER_FAILED.getMessage());
     }
 
-	@GetMapping(value = "/select/{driverId}")
+	@GetMapping(value = "/selectById/{driverId}")
 	public Result<Drivers> selectDriverById(@PathVariable Integer driverId) {
 		Drivers queryById = driversService.selectDriverById(driverId);
 		return Result.ok(queryById);
 	}
+
+    @GetMapping(value = "/selectByCarsRepairNumber/{carsRepairNumber}")
+    public Result<Drivers> selectDriverByCarsRepairNumber(@PathVariable String carsRepairNumber) {
+        Drivers queryById = driversService.selectDriverByCarsRepairNumber(carsRepairNumber);
+        return Result.ok(queryById);
+    }
 
     @GetMapping(value = "/queryLikeDrivers")
     public Result<PageData<Drivers>> queryLikeDrivers(Drivers driver) {

@@ -15,6 +15,8 @@ public interface AdvicesService {
 
     public Advices selectAdvicesById(Integer adviceId);
 
+    public Advices selectAdvicesByCarsRepairNumber(String carsRepairNumber);
+
     public PageData<Advices> queryLikeAdvices(Advices advice);
 
     public PageData<Advices> allAdvices(AdvicesParameter advicesParameter);
