@@ -1,13 +1,15 @@
 package cn.lvhaosir.controller;
 
+import cn.lvhaosir.result.CarBrandPerMonth;
 import cn.lvhaosir.service.DashBoardService;
 import cn.lvhaosir.utils.Result;
-import cn.lvhaosir.utils.SystemException;
-import cn.lvhaosir.utils.SystemSuccess;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/dashBoard")
@@ -22,27 +24,45 @@ public class DashBoardController {
         return Result.ok(aDouble);
     }
 
-    @GetMapping(value = "/selectAmountLastYearByMonth")
-    public Result<String> selectAmountLastYearByMonth() {
-        Integer add = dashBoardService.selectAmountLastYearByMonth();
-        return Result.ok(add == 1 ? SystemSuccess.ADD_DRIVER_SUCCESS.getMessage() : SystemException.ADD_DRIVER_FAILED.getMessage());
+    @GetMapping(value = "/selectTotalAmountLastYear")
+    public Result<Double> selectTotalAmountLastYear() {
+        Double aDouble = dashBoardService.selectTotalAmountLastYear();
+        return Result.ok(aDouble);
     }
 
     @GetMapping(value = "/selectCountUser")
-    public Result<String> selectCountUser() {
-        Integer add = dashBoardService.selectCountUser();
-        return Result.ok(add == 1 ? SystemSuccess.ADD_DRIVER_SUCCESS.getMessage() : SystemException.ADD_DRIVER_FAILED.getMessage());
+    public Result<Integer> selectCountUser() {
+        Integer integer = dashBoardService.selectCountUser();
+        return Result.ok(integer);
     }
 
     @GetMapping(value = "/selectCountUserLastYear")
-    public Result<String> selectCountUserLastYear() {
-        Integer add = dashBoardService.selectCountUserLastYear();
-        return Result.ok(add == 1 ? SystemSuccess.ADD_DRIVER_SUCCESS.getMessage() : SystemException.ADD_DRIVER_FAILED.getMessage());
+    public Result<Integer> selectCountUserLastYear() {
+        Integer integer = dashBoardService.selectCountUserLastYear();
+        return Result.ok(integer);
+    }
+
+    @GetMapping(value = "/selectAmountLastYearByMonth")
+    public Result<JSONObject> selectAmountLastYearByMonth() {
+        JSONObject list = dashBoardService.selectAmountLastYearByMonth();
+        return Result.ok(list);
     }
 
     @GetMapping(value = "/selectCarCountByBrandLastYear")
-    public Result<String> selectCarCountByBrandLastYear() {
-        Integer add = dashBoardService.selectCarCountByBrandLastYear();
-        return Result.ok(add == 1 ? SystemSuccess.ADD_DRIVER_SUCCESS.getMessage() : SystemException.ADD_DRIVER_FAILED.getMessage());
+    public Result<List<CarBrandPerMonth>> selectCarCountByBrandLastYear() {
+        List<CarBrandPerMonth> list = dashBoardService.selectCarCountByBrandLastYear();
+        return Result.ok(list);
+    }
+
+    @GetMapping(value = "/selectCarCountByBrandAndNameLastMonth")
+    public Result<List<CarBrandPerMonth>> selectCarCountByBrandAndNameLastMonth() {
+        List<CarBrandPerMonth> list = dashBoardService.selectCarCountByBrandAndNameLastMonth();
+        return Result.ok(list);
+    }
+
+    @GetMapping(value = "/selectCarNameAndCountLastYear")
+    public Result<List<CarBrandPerMonth>> selectCarNameAndCountLastYear() {
+        List<CarBrandPerMonth> list = dashBoardService.selectCarNameAndCountLastYear();
+        return Result.ok(list);
     }
 }
