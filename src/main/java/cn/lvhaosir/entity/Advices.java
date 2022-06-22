@@ -30,6 +30,12 @@ public class Advices extends PageParam implements Serializable {
     private String carNumber;
 
     /**
+     * 设备集合
+     */
+    @Column(name = "items")
+    private String items;
+
+    /**
      * 设备类型
      */
     @Column(name = "advices_type")
