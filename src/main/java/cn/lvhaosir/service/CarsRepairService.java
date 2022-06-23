@@ -6,25 +6,24 @@ import cn.lvhaosir.paramater.CarsRepairParameter;
 import cn.lvhaosir.utils.PageData;
 
 import java.text.ParseException;
-import java.util.List;
 import java.util.Set;
 
 
 public interface CarsRepairService {
 
-	public Integer add(CarsRepair carsRepair);
+	public Integer add(CarsRepairParameter carsRepair);
 
-	public Integer delete(Integer id);
+	public Integer delete(String carsRepairNumber);
 
-	public Integer update(CarsRepair carsRepair);
+	public Integer update(CarsRepairParameter carsRepair);
 
-	public CarsRepair selectCarsRepairById(Integer id);
+	public CarsRepairParameter selectCarsRepairByCarsRepairNumber(String carsRepairNumber);
 
 	public PageData<CarsRepair> queryAllCarsRepairs(CarsRepairParameter carsRepairParameter) throws ParseException;
 
 	public Set<String> selectCarNumbers();
 
-	public Integer statusOperate(Integer carsRepairId, Integer status);
+	public Integer statusOperate(String carsRepairNumber, Integer status);
 
-	public List<CarsRepair> detailsByCarsRepairNumber(String carsRepairNumber);
+	public CarsRepairParameter detailsByCarsRepairNumber(String carsRepairNumber);
 }

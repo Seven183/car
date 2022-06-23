@@ -135,42 +135,21 @@ public class CarsRepair extends PageParam implements Serializable {
     private String carPhoto;
 
 
-
-
-    /**
-     * 设备类型
-     */
-    @Column(name = "advices_type")
-    private String advicesType;
-
-    /**
-     * 设备名称
-     */
-    @Column(name = "advices_name")
-    private String advicesName;
-
-    /**
-     * 设备编号（sn 码）
-     */
-    @Column(name = "advices_number")
-    private String advicesNumber;
-
-    /**
-     * 设备数量
-     */
-    @Column(name = "advices_quantity")
-    private Integer advicesQuantity;
-
-    /**
-     * 设备单价金额
-     */
-    @Column(name = "advices_price_amount")
-    private Double advicesPriceAmount;
-
     /**
      * 设备总金额
      */
-    @Column(name = "advices_full_amount")
-    private Double advicesFullAmount;
+    @Column(name = "advices_json")
+    private String advicesJson;
 
+
+    @Data
+    public static class Advices {
+        private String advicesType;
+        private String advicesName;
+        private String advicesNumber;
+        private Integer advicesQuantity;
+        private Double advicesPriceAmount;
+        private Double advicesFullAmount;
+    }
 }
+

@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
-import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -23,26 +22,26 @@ public class CarsRepairController {
     private CarsRepairService carsRepairService;
 
     @PostMapping(value = "/addCarsRepair")
-    public Result<String> addCarsRepair(@RequestBody CarsRepair carsRepair) {
+    public Result<String> addCarsRepair(@RequestBody CarsRepairParameter carsRepair) {
         Integer add = carsRepairService.add(carsRepair);
         return Result.ok(add == 1 ? SystemSuccess.ADD_CAR_REPAIR_SUCCESS.getMessage() : SystemException.ADD_CAR_REPAIR_FAILED.getMessage());
     }
 
-    @GetMapping(value = "/deleteCarsRepair/{carsRepairId}")
-    public Result<String> deleteCarsRepair(@PathVariable Integer carsRepairId) {
-        Integer delete = carsRepairService.delete(carsRepairId);
+    @GetMapping(value = "/deleteCarsRepair/{carsRepairNumber}")
+    public Result<String> deleteCarsRepair(@PathVariable String carsRepairNumber) {
+        Integer delete = carsRepairService.delete(carsRepairNumber);
         return Result.ok(delete == 1 ? SystemSuccess.DELETE_CAR_REPAIR_SUCCESS.getMessage() : SystemException.DELETE_CAR_REPAIR_FAILED.getMessage());
     }
 
     @PostMapping(value = "/updateCarsRepair")
-    public Result<String> updateCarsRepair(@RequestBody CarsRepair carsRepair) {
+    public Result<String> updateCarsRepair(@RequestBody CarsRepairParameter carsRepair) {
         Integer update = carsRepairService.update(carsRepair);
         return Result.ok(update == 1 ? SystemSuccess.UPDATE_CAR_REPAIR_SUCCESS.getMessage() : SystemException.UPDATE_CAR_REPAIR_FAILED.getMessage());
     }
 
-    @GetMapping(value = "/select/{carsRepairId}")
-    public Result<CarsRepair> selectCarsRepairById(@PathVariable Integer carsRepairId) {
-        CarsRepair carsRepair = carsRepairService.selectCarsRepairById(carsRepairId);
+    @GetMapping(value = "/select/{carsRepairNumber}")
+    public Result<CarsRepairParameter> selectCarsRepairByCarsRepairNumber(@PathVariable String carsRepairNumber) {
+        CarsRepairParameter carsRepair = carsRepairService.selectCarsRepairByCarsRepairNumber(carsRepairNumber);
         return Result.ok(carsRepair);
     }
 
@@ -67,8 +66,8 @@ public class CarsRepairController {
      * @return
      */
     @GetMapping(value = "/statusOperate")
-    public Result<Integer> statusOperate(Integer carsRepairId, Integer status) {
-        Integer update = carsRepairService.statusOperate(carsRepairId, status);
+    public Result<Integer> statusOperate(String carsRepairNumber, Integer status) {
+        Integer update = carsRepairService.statusOperate(carsRepairNumber, status);
         return Result.ok(update);
     }
 
@@ -77,8 +76,8 @@ public class CarsRepairController {
      * @return
      */
     @GetMapping(value = "/detailsByCarsRepairNumber/{carsRepairNumber}")
-    public Result<List<CarsRepair>> detailsByCarsRepairNumber(@PathVariable String carsRepairNumber) {
-        List<CarsRepair> carsRepairDetails = carsRepairService.detailsByCarsRepairNumber(carsRepairNumber);
+    public Result<CarsRepairParameter> detailsByCarsRepairNumber(@PathVariable String carsRepairNumber) {
+        CarsRepairParameter carsRepairDetails = carsRepairService.detailsByCarsRepairNumber(carsRepairNumber);
         return Result.ok(carsRepairDetails);
     }
 }

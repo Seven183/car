@@ -13,30 +13,40 @@ import java.util.List;
 public interface DashBoardMapper extends CommonMapper<CarsRepair> {
 
     @Select("<script>" +
-            " select sum(advices_full_amount) as advicesFullAmount from cars_repair " +
+            " select advices_json as advicesJson from cars_repair where status = 1 " +
             " </script>")
-    Double selectTotalAmount();
+    List<String> selectTotalAmount();
 
 
     @Select("<script>" +
-            " select sum(advices_full_amount) as advicesFullAmount from cars_repair " +
-            " where create_time > DATE_SUB(CURDATE(), INTERVAL 365 day) " +
+            " select advices_json as advicesJson from cars_repair " +
+            " where create_time > DATE_SUB(CURDATE(), INTERVAL 365 day) and status = 1 " +
             " </script>")
-    Double selectTotalAmountLastYear();
+    List<String> selectTotalAmountLastYear();
 
 
     @Select("<script>" +
             " select " +
             "     sum(advices_full_amount) as money, " +
-            "     count(user_name) as user, " +
+//            "     count(user_name) as user, " +
             "     DATE_FORMAT(create_time,'%Y-%m') as month " +
-            " from cars_repair " +
-            " where create_time > DATE_SUB(CURDATE(), INTERVAL 365 day) " +
+            " from advices " +
+            " where create_time > DATE_SUB(CURDATE(), INTERVAL 365 day) and status = 1 " +
             " group by DATE_FORMAT(create_time,'%Y-%m') " +
             " order by DATE_FORMAT(create_time,'%Y-%m') " +
             " </script>")
     List<MoneyPerMonth> selectAmountLastYearByMonth();
 
+    @Select("<script>" +
+            " select " +
+            "     count(user_name) as user, " +
+            "     DATE_FORMAT(create_time,'%Y-%m') as month " +
+            " from cars_repair " +
+            " where create_time > DATE_SUB(CURDATE(), INTERVAL 365 day) and status = 1 " +
+            " group by DATE_FORMAT(create_time,'%Y-%m') " +
+            " order by DATE_FORMAT(create_time,'%Y-%m') " +
+            " </script>")
+    List<MoneyPerMonth> selectUserCountLastYearByMonth();
 
     @Select("<script>" +
             " select " +

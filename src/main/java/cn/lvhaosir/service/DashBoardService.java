@@ -18,6 +18,8 @@ public interface DashBoardService {
 
     public JSONObject selectAmountLastYearByMonth();
 
+    public JSONObject selectUserCountLastYearByMonth();
+
     public List<CarBrandPerMonth> selectCarCountByBrandLastYear();
 
     public List<CarBrandPerMonth> selectCarCountByBrandAndNameLastMonth();

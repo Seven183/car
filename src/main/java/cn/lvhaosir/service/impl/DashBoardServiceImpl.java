@@ -23,12 +23,29 @@ public class DashBoardServiceImpl implements DashBoardService {
 
     @Override
     public Double selectTotalAmount() {
-        return dashBoardMapper.selectTotalAmount();
+
+        double amount = 0.0;
+        List<String> advicesJson = dashBoardMapper.selectTotalAmount();
+        for (String advicesJso : advicesJson) {
+            List<CarsRepair.Advices> list = JSONObject.parseArray(advicesJso, CarsRepair.Advices.class);
+            for (CarsRepair.Advices lis : list) {
+                amount = amount + lis.getAdvicesFullAmount();
+            }
+        }
+        return amount;
     }
 
     @Override
     public Double selectTotalAmountLastYear() {
-        return dashBoardMapper.selectTotalAmountLastYear();
+        double amount = 0.0;
+        List<String> advicesJson = dashBoardMapper.selectTotalAmountLastYear();
+        for (String advicesJso : advicesJson) {
+            List<CarsRepair.Advices> list = JSONObject.parseArray(advicesJso, CarsRepair.Advices.class);
+            for (CarsRepair.Advices lis : list) {
+                amount = amount + lis.getAdvicesFullAmount();
+            }
+        }
+        return amount;
     }
 
     @Override
@@ -51,7 +68,6 @@ public class DashBoardServiceImpl implements DashBoardService {
                 MoneyPerMonth moneyPerMonth = new MoneyPerMonth();
                 moneyPerMonth.setMonth(lastYearMonth.get(i));
                 moneyPerMonth.setMoney(0.0);
-                moneyPerMonth.setUser(0);
                 moneyPerMonths.add(moneyPerMonth);
             }
         }
@@ -59,9 +75,30 @@ public class DashBoardServiceImpl implements DashBoardService {
 
         List<String> collectMonth = moneyPerMonths.stream().map(MoneyPerMonth::getMonth).collect(Collectors.toList());
         List<Double> collectMoney = moneyPerMonths.stream().map(MoneyPerMonth::getMoney).collect(Collectors.toList());
-        List<Integer> collectUser = moneyPerMonths.stream().map(MoneyPerMonth::getUser).collect(Collectors.toList());
         jsonObject.put("collectMonthList", collectMonth);
         jsonObject.put("collectMoneyList", collectMoney);
+        return jsonObject;
+
+    }
+
+    @Override
+    public JSONObject selectUserCountLastYearByMonth() {
+        JSONObject jsonObject = new JSONObject();
+        List<MoneyPerMonth> moneyPerMonths = dashBoardMapper.selectUserCountLastYearByMonth();
+        List<String> lastYearMonth = DateUtils.getLastYearMonth();
+        for (int i = 1; i < lastYearMonth.size(); i++) {
+            if (!moneyPerMonths.toString().contains(lastYearMonth.get(i))) {
+                MoneyPerMonth moneyPerMonth = new MoneyPerMonth();
+                moneyPerMonth.setMonth(lastYearMonth.get(i));
+                moneyPerMonth.setUser(0);
+                moneyPerMonths.add(moneyPerMonth);
+            }
+        }
+        moneyPerMonths.sort(Comparator.comparing(MoneyPerMonth::getMonth));
+
+        List<String> collectMonth = moneyPerMonths.stream().map(MoneyPerMonth::getMonth).collect(Collectors.toList());
+        List<Integer> collectUser = moneyPerMonths.stream().map(MoneyPerMonth::getUser).collect(Collectors.toList());
+        jsonObject.put("collectMonthList", collectMonth);
         jsonObject.put("collectUserList", collectUser);
         return jsonObject;
 

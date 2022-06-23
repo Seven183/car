@@ -1,12 +1,18 @@
 package cn.lvhaosir.service.impl;
 
 
+import cn.lvhaosir.entity.Advices;
 import cn.lvhaosir.entity.CarsRepair;
+import cn.lvhaosir.mapper.AdvicesMapper;
 import cn.lvhaosir.mapper.CarsRepairMapper;
 import cn.lvhaosir.paramater.CarsRepairParameter;
 import cn.lvhaosir.service.CarsRepairService;
+import cn.lvhaosir.utils.BeanUtils;
 import cn.lvhaosir.utils.DateUtils;
 import cn.lvhaosir.utils.PageData;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -26,53 +32,115 @@ public class CarsRepairServiceImpl implements CarsRepairService {
     @Autowired
     private CarsRepairMapper carsRepairMapper;
 
+    @Autowired
+    private AdvicesMapper advicesMapper;
+
 
     @Override
-    public Integer add(CarsRepair carsRepair) {
-        carsRepair.setCarsRepairNumber(UUID.randomUUID().toString());
+    public Integer add(CarsRepairParameter carsRepairParameter) {
+
+        // 插入大宽表
+        String carsRepairNumber = UUID.randomUUID().toString();
+        CarsRepair carsRepair = BeanUtils.copy(carsRepairParameter, CarsRepair.class);
+        JSONArray array= JSONArray.parseArray(JSON.toJSONString(carsRepairParameter.getAdvicesItems()));
+        carsRepair.setAdvicesJson(array.toJSONString());
+        carsRepair.setCarsRepairNumber(carsRepairNumber);
         carsRepair.setCreateTime(new Date());
         carsRepair.setUpdateTime(new Date());
         carsRepair.setStatus(0);
         carsRepair.setIsDelete(0);
-        return carsRepairMapper.insert(carsRepair);
+        carsRepairMapper.insert(carsRepair);
+
+        //插入小表
+        List<CarsRepair.Advices> advicesItems = carsRepairParameter.getAdvicesItems();
+        for (CarsRepair.Advices advicesItem: advicesItems) {
+            Advices advices = BeanUtils.copy(advicesItem, Advices.class);
+            advices.setCarsRepairNumber(carsRepairNumber);
+            advices.setCarNumber(carsRepairParameter.getCarNumber());
+            advices.setCreateTime(new Date());
+            advices.setUpdateTime(new Date());
+            advices.setStatus(0);
+            advices.setIsDelete(0);
+            advicesMapper.insert(advices);
+        }
+        return 1;
     }
 
     @Override
-    public Integer delete(Integer carsRepairId) {
+    public Integer delete(String carsRepairNumber) {
         CarsRepair carsRepair = new CarsRepair();
         carsRepair.setIsDelete(1);
         carsRepair.setUpdateTime(new Date());
         Example example = new Example(CarsRepair.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("carsRepairId", carsRepairId);
-        return carsRepairMapper.updateByExampleSelective(carsRepair, example);
-//        return carsRepairMapper.deleteByPrimaryKey(carsRepairId);
+        criteria.andEqualTo("carsRepairNumber", carsRepairNumber);
+        carsRepairMapper.updateByExampleSelective(carsRepair, example);
+
+        Advices advices = new Advices();
+        advices.setIsDelete(1);
+        advices.setUpdateTime(new Date());
+        Example exampleAdvices = new Example(Advices.class);
+        Example.Criteria criteriaAdvices = exampleAdvices.createCriteria();
+        criteriaAdvices.andEqualTo("carsRepairNumber", carsRepairNumber);
+        advicesMapper.updateByExampleSelective(advices, example);
+        return 1;
     }
 
     @Override
-    public Integer update(CarsRepair carsRepair) {
+    public Integer update(CarsRepairParameter carsRepairParameter) {
+
+        CarsRepair carsRepair = BeanUtils.copy(carsRepairParameter, CarsRepair.class);
+        JSONArray array= JSONArray.parseArray(JSON.toJSONString(carsRepairParameter.getAdvicesItems()));
+        carsRepair.setAdvicesJson(array.toJSONString());
         carsRepair.setUpdateTime(new Date());
         Example example = new Example(CarsRepair.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("carsRepairId", carsRepair.getCarsRepairId());
-        return carsRepairMapper.updateByExampleSelective(carsRepair, example);
+        criteria.andEqualTo("carsRepairNumber", carsRepair.getCarsRepairNumber());
+        carsRepairMapper.updateByExampleSelective(carsRepair, example);
+
+        Advices advices = new Advices();
+        advices.setCarsRepairNumber(carsRepair.getCarsRepairNumber());
+        int delete = advicesMapper.delete(advices);
+
+        if (delete ==1 ){
+            List<CarsRepair.Advices> advicesItems = carsRepairParameter.getAdvicesItems();
+            for (CarsRepair.Advices advicesItem: advicesItems) {
+                Advices advicess = BeanUtils.copy(advicesItem, Advices.class);
+                advicess.setCarsRepairNumber(carsRepairParameter.getCarsRepairNumber());
+                advicess.setCarNumber(carsRepairParameter.getCarNumber());
+                advicess.setCreateTime(new Date());
+                advicess.setUpdateTime(new Date());
+                advicess.setStatus(0);
+                advicess.setIsDelete(0);
+                advicesMapper.insert(advicess);
+            }
+        }
+        return 1;
     }
 
     @Override
-    public CarsRepair selectCarsRepairById(Integer carsRepairId) {
+    public CarsRepairParameter selectCarsRepairByCarsRepairNumber(String carsRepairNumber) {
         CarsRepair users = new CarsRepair();
-        users.setCarsRepairId(carsRepairId);
-        return carsRepairMapper.selectOne(users);
+        users.setCarsRepairNumber(carsRepairNumber);
+        CarsRepair carsRepair = carsRepairMapper.selectOne(users);
+        CarsRepairParameter carsRepairParameter = BeanUtils.copy(carsRepair, CarsRepairParameter.class);
+        String advicesItems = carsRepair.getAdvicesJson();
+        List<CarsRepair.Advices> list = JSONObject.parseArray(advicesItems, CarsRepair.Advices.class);
+        carsRepairParameter.setAdvicesItems(list);
+        return carsRepairParameter;
     }
 
     @Override
-    public List<CarsRepair> detailsByCarsRepairNumber(String carsRepairNumber) {
+    public CarsRepairParameter detailsByCarsRepairNumber(String carsRepairNumber) {
 
         Example carsRepair = new Example(CarsRepair.class);
         Example.Criteria criteriaCarsRepair = carsRepair.createCriteria();
         criteriaCarsRepair.andEqualTo("carsRepairNumber", carsRepairNumber);
         List<CarsRepair> listCarsRepair = carsRepairMapper.selectByExample(carsRepair);
-        return listCarsRepair;
+        CarsRepairParameter carsRepairParameter = BeanUtils.copy(listCarsRepair.get(0), CarsRepairParameter.class);
+        List<CarsRepair.Advices> list = JSONObject.parseArray(listCarsRepair.get(0).getAdvicesJson(), CarsRepair.Advices.class);
+        carsRepairParameter.setAdvicesItems(list);
+        return carsRepairParameter;
     }
 
     @Override
@@ -82,14 +150,25 @@ public class CarsRepairServiceImpl implements CarsRepairService {
     }
 
     @Override
-    public Integer statusOperate(Integer carsRepairId, Integer status) {
+    public Integer statusOperate(String carsRepairNumber, Integer status) {
         CarsRepair carsRepair = new CarsRepair();
         carsRepair.setStatus(status);
         carsRepair.setUpdateTime(new Date());
+        carsRepair.setEndTime(new Date());
         Example example = new Example(CarsRepair.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("carsRepairId", carsRepairId);
-        return carsRepairMapper.updateByExampleSelective(carsRepair, example);
+        criteria.andEqualTo("carsRepairNumber", carsRepairNumber);
+        carsRepairMapper.updateByExampleSelective(carsRepair, example);
+
+        Advices advices = new Advices();
+        advices.setStatus(status);
+        advices.setUpdateTime(new Date());
+        advices.setEndTime(new Date());
+        Example exampleAdvices = new Example(Advices.class);
+        Example.Criteria criteriaAdvices = exampleAdvices.createCriteria();
+        criteriaAdvices.andEqualTo("carsRepairNumber", carsRepairNumber);
+        advicesMapper.updateByExampleSelective(advices, example);
+        return 1;
     }
 
     @Override

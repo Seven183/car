@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 
@@ -30,41 +29,6 @@ public class AdvicesServiceImpl implements AdvicesService {
     @Autowired
     private AdvicesMapper advicesMapper;
 
-    @Override
-    public Integer add(Advices advice) {
-        advice.setCreateTime(new Date());
-        advice.setUpdateTime(new Date());
-        advice.setIsDelete(0);
-        return advicesMapper.insert(advice);
-    }
-
-    @Override
-    public Integer delete(Integer id) {
-        Advices advices = new Advices();
-        advices.setIsDelete(1);
-        advices.setUpdateTime(new Date());
-        Example example = new Example(Advices.class);
-        Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("advicesId", id);
-        return advicesMapper.updateByExampleSelective(advices, example);
-//        return advicesMapper.deleteByPrimaryKey(id);
-    }
-
-    @Override
-    public Integer update(Advices advice) {
-        CarsRepair copy = BeanUtils.copy(advice, CarsRepair.class);
-        Example example = new Example(CarsRepair.class);
-        Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("carsRepairNumber",copy.getCarsRepairNumber());
-        return carsRepairMapper.updateByExampleSelective(copy, example);
-    }
-
-    @Override
-    public Advices selectAdvicesById(Integer id) {
-        Advices advices = new Advices();
-        advices.setAdvicesId(id);
-        return advicesMapper.selectOne(advices);
-    }
 
     @Override
     public Advices selectAdvicesByCarsRepairNumber(String carsRepairNumber) {
@@ -72,14 +36,6 @@ public class AdvicesServiceImpl implements AdvicesService {
         carsRepair.setCarsRepairNumber(carsRepairNumber);
         CarsRepair carsRepair1 = carsRepairMapper.selectOne(carsRepair);
         return BeanUtils.copy(carsRepair1, Advices.class);
-    }
-
-    @Override
-    public PageData<Advices> queryLikeAdvices(Advices advice) {
-        PageHelper.startPage(advice.getPageNum(), advice.getPageSize());
-        List<Advices> list = advicesMapper.select(advice);
-        PageInfo<Advices> pageInfo = PageInfo.of(list);
-        return new PageData<>(list, pageInfo.getTotal());
     }
 
     @Override
@@ -112,8 +68,7 @@ public class AdvicesServiceImpl implements AdvicesService {
             criteria.andLike("advicesNumber", "%" + advicesParameter.getAdvicesNumber() + "%");
         }
 
-        List<CarsRepair> listCarsRepair = carsRepairMapper.selectByExample(example);
-        List<Advices> list = BeanUtils.copyList(listCarsRepair,Advices.class);
+        List<Advices> list = advicesMapper.selectByExample(example);
         list.sort(Comparator.comparing(Advices::getUpdateTime).reversed());
         PageInfo<Advices> pageInfo = PageInfo.of(list);
         return new PageData<>(list, pageInfo.getTotal());
