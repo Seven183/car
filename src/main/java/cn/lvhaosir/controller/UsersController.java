@@ -24,9 +24,9 @@ public class UsersController {
 		return Result.ok( add==1 ? SystemSuccess.ADD_USER_SUCCESS.getMessage() : SystemException.ADD_USER_FAILED.getMessage());
 	}
 
-	@GetMapping(value="/delete/{id}")
-	public Result<String> deleteUser(@PathVariable Integer id){
-		Integer delete = usersService.delete(id);
+	@GetMapping(value="/delete/{userId}")
+	public Result<String> deleteUser(@PathVariable Integer userId){
+		Integer delete = usersService.delete(userId);
 		return Result.ok( delete==1 ? SystemSuccess.DELETE_USER_SUCCESS.getMessage() : SystemException.DELETE_USER_FAILED.getMessage());
 	}
 
@@ -36,9 +36,9 @@ public class UsersController {
 		return Result.ok( update==1 ? SystemSuccess.UPDATE_USER_SUCCESS.getMessage() : SystemException.UPDATE_USER_FAILED.getMessage());
 	}
 
-	@GetMapping(value="/select/{id}")
-	public Result<Users> selectUserById(@PathVariable Integer id){
-		Users users = usersService.selectUserById(id);
+	@GetMapping(value="/select/{userId}")
+	public Result<Users> selectUserByUserId(@PathVariable Integer userId){
+		Users users = usersService.selectUserByUserId(userId);
 		return Result.ok(users);
 	}
 

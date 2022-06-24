@@ -22,17 +22,6 @@ public class DriversController {
     @Autowired
     private DriversService driversService;
 
-    @PostMapping(value = "/addDriver")
-    public Result<String> addDriver(@RequestBody Drivers driver) {
-        Integer add = driversService.add(driver);
-        return Result.ok(add == 1 ? SystemSuccess.ADD_DRIVER_SUCCESS.getMessage() : SystemException.ADD_DRIVER_FAILED.getMessage());
-    }
-
-	@GetMapping(value = "/deleteDriver/{driverId}")
-	public Result<String> deleteDriver(@PathVariable Integer driverId) {
-		Integer delete = driversService.delete(driverId);
-		return Result.ok(delete == 1 ? SystemSuccess.DELETE_DRIVER_SUCCESS.getMessage() : SystemException.DELETE_DRIVER_FAILED.getMessage());
-	}
 
     @PostMapping(value = "/updateDriver")
     public Result<String> updateDriver(@RequestBody Drivers driver) {
@@ -40,22 +29,10 @@ public class DriversController {
         return Result.ok(update == 1 ? SystemSuccess.UPDATE_DRIVER_SUCCESS.getMessage() : SystemException.UPDATE_DRIVER_FAILED.getMessage());
     }
 
-	@GetMapping(value = "/selectById/{driverId}")
-	public Result<Drivers> selectDriverById(@PathVariable Integer driverId) {
-		Drivers queryById = driversService.selectDriverById(driverId);
-		return Result.ok(queryById);
-	}
-
     @GetMapping(value = "/selectByCarsRepairNumber/{carsRepairNumber}")
     public Result<Drivers> selectDriverByCarsRepairNumber(@PathVariable String carsRepairNumber) {
         Drivers queryById = driversService.selectDriverByCarsRepairNumber(carsRepairNumber);
         return Result.ok(queryById);
-    }
-
-    @GetMapping(value = "/queryLikeDrivers")
-    public Result<PageData<Drivers>> queryLikeDrivers(Drivers driver) {
-        PageData<Drivers> pageDate = driversService.queryLikeDrivers(driver);
-        return Result.ok(pageDate);
     }
 
     @GetMapping(value = "/allDrivers")

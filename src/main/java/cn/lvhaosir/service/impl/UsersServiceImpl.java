@@ -52,8 +52,14 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public Integer delete(Object id) {
-        return baseMapper.deleteByPrimaryKey(id);
+    public Integer delete(Integer userId) {
+        Users users = new Users();
+        users.setIsDelete(1);
+        users.setUpdateTime(new Date());
+        Example example = new Example(Users.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("userId", userId);
+        return baseMapper.updateByExampleSelective(users, example);
     }
 
 
@@ -65,9 +71,9 @@ public class UsersServiceImpl implements UsersService {
         return baseMapper.updateByExampleSelective(model, example);
     }
 
-    public Users selectUserById(Integer id) {
+    public Users selectUserByUserId(Integer userId) {
         Users users = new Users();
-        users.setUserId(id);
+        users.setUserId(userId);
         return baseMapper.selectOne(users);
     }
 

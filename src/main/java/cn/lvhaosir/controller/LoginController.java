@@ -13,7 +13,7 @@ import redis.clients.jedis.Jedis;
 
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class LoginController {
 
     @Autowired
@@ -22,7 +22,7 @@ public class LoginController {
     @PostMapping(value="/login")
     public Result<JSONObject> login(@RequestBody Users user){
         Users queryByParam = usersService.login(user);
-        if(queryByParam==null){
+        if(queryByParam==null) {
             return Result.failed(SystemException.UNKNOWN_USER.getCode(),SystemException.UNKNOWN_USER.getMessage());
         }
         Jedis jedis = RedisUtils.getConn();
@@ -30,6 +30,7 @@ public class LoginController {
         jedis.set("auth:token", token, "NX","EX",3600);
         JSONObject json = new JSONObject();
         json.put("name",user.getUserName());
+        json.put("userId",queryByParam.getUserId());
         json.put("token",token);
         json.put("avatar","https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
         json.put("message",SystemSuccess.LOGIN_SUCCESS.getMessage());

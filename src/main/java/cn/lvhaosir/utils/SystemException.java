@@ -2,7 +2,7 @@ package cn.lvhaosir.utils;
 
 public enum SystemException implements Rule {
 
-    UNKNOWN_USER("0000", "no_user"),
+    UNKNOWN_USER("0000", "没有找到对应的用户，或者密码错误"),
 
     LOGIN_FAILED("000", "login_failed"),
     LOGIN_OUT_FAILED("001", "login_out_failed"),

@@ -8,11 +8,11 @@ public interface UsersService {
 
     public Integer add(Users users);
 
-    public Integer delete(Object id);
+    public Integer delete(Integer userId);
 
     public Integer update(Users model);
 
-    public Users selectUserById(Integer id);
+    public Users selectUserByUserId(Integer userId);
 
     public PageData<Users> queryListByParam(Users users);
 

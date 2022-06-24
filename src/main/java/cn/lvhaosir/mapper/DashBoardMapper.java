@@ -42,7 +42,7 @@ public interface DashBoardMapper extends CommonMapper<CarsRepair> {
             "     count(user_name) as user, " +
             "     DATE_FORMAT(create_time,'%Y-%m') as month " +
             " from cars_repair " +
-            " where create_time > DATE_SUB(CURDATE(), INTERVAL 365 day) and status = 1 " +
+            " where create_time > DATE_SUB(CURDATE(), INTERVAL 365 day) " +
             " group by DATE_FORMAT(create_time,'%Y-%m') " +
             " order by DATE_FORMAT(create_time,'%Y-%m') " +
             " </script>")

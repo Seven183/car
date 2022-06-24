@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -29,25 +28,6 @@ public class DriversServiceImpl implements DriversService {
 	@Autowired
 	private CarsRepairMapper carsRepairMapper;
 
-	@Override
-	public Integer add(Drivers driver) {
-		driver.setCreateTime(new Date());
-		driver.setUpdateTime(new Date());
-		driver.setIsDelete(0);
-		return driversMapper.insert(driver);
-	}
-
-	@Override
-	public Integer delete(Integer driverId) {
-		Drivers drivers = new Drivers();
-		drivers.setIsDelete(1);
-		drivers.setUpdateTime(new Date());
-		Example example = new Example(Drivers.class);
-		Example.Criteria criteria = example.createCriteria();
-		criteria.andEqualTo("driverId", driverId);
-		return driversMapper.updateByExampleSelective(drivers, example);
-//		return driversMapper.deleteByPrimaryKey(driverId);
-	}
 
 	@Override
 	public Integer update(Drivers driver) {
@@ -59,26 +39,11 @@ public class DriversServiceImpl implements DriversService {
 	}
 
 	@Override
-	public Drivers selectDriverById(Integer driverId) {
-		Drivers driver = new Drivers();
-		driver.setDriverId(driverId);
-		return driversMapper.selectOne(driver);
-	}
-
-	@Override
 	public Drivers selectDriverByCarsRepairNumber(String carsRepairNumber) {
 		CarsRepair carsRepair = new CarsRepair();
 		carsRepair.setCarsRepairNumber(carsRepairNumber);
 		CarsRepair carsRepair1 = carsRepairMapper.selectOne(carsRepair);
 		return BeanUtils.copy(carsRepair1,Drivers.class);
-	}
-
-	@Override
-	public PageData<Drivers> queryLikeDrivers(Drivers driver) {
-		PageHelper.startPage(driver.getPageNum(),driver.getPageSize());
-		List<Drivers> list = driversMapper.queryLike(driver);
-		PageInfo<Drivers> pageInfo = PageInfo.of(list);
-		return new PageData<>(list, pageInfo.getTotal());
 	}
 
 	@Override
