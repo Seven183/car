@@ -20,7 +20,7 @@ import java.util.Map;
 public class FileUploadController {
 
     // 允许上传的格式 图片形式
-    private static final String[] IMAGE_TYPE = new String[]{".bmp", ".jpg", ".jpeg", ".png"};
+    private static final String[] IMAGE_TYPE = new String[]{".bmp", ".jpg", ".jpeg", ".png", ".jfif"};
 
     @Autowired
     private FileUploadService fileUploadService;
@@ -67,7 +67,7 @@ public class FileUploadController {
             boolean isLegal = picUploadResult.isLegal();
             if (isLegal) {
                 Map resMap = new HashMap<>();
-                resMap.put("imgPaths", picUploadResult.getImgPahts());
+                resMap.put("imgPaths", picUploadResult.getImgPaths());
                 return Result.ok(resMap);
             } else {
                 return Result.error("图片上传有误");

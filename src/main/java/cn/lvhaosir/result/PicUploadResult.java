@@ -12,5 +12,5 @@ public class PicUploadResult {
 
     private String imgPath;
 
-    private List<String> imgPahts;
+    private List<String> imgPaths;
 }
