@@ -37,5 +37,5 @@ public class Result<T> {
         return new Result<>(code, message);
     }
 
-    public static <T> Result<T> error(T t){ return new Result<>(t); }
+    public static <T> Result<T> failed(T t){ return new Result<>(t); }
 }
