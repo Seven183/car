@@ -131,8 +131,8 @@ public class CarsRepair extends PageParam implements Serializable {
     /**
      * 汽车图片
      */
-    @Column(name = "car_photo")
-    private String carPhoto;
+    @Column(name = "car_photo_json")
+    private String carPhotoJson;
 
 
     /**
@@ -150,6 +150,11 @@ public class CarsRepair extends PageParam implements Serializable {
         private Integer advicesQuantity;
         private Double advicesPriceAmount;
         private Double advicesFullAmount;
+    }
+    @Data
+    public static class CarPhoto {
+        private String name;
+        private String url;
     }
 }
 

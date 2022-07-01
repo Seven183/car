@@ -33,7 +33,7 @@ public class CarsRepairParameter extends PageParam {
     private String carBrand;
     private String carName;
     private String engineNumber;
-    private String carPhoto;
+    private List<CarsRepair.CarPhoto> carPhoto;
     private List<CarsRepair.Advices> advicesItems;
     private String startCreateTime;
     private String endCreateTime;

@@ -42,6 +42,8 @@ public class CarsRepairServiceImpl implements CarsRepairService {
         // 插入大宽表
         String carsRepairNumber = UUID.randomUUID().toString();
         CarsRepair carsRepair = BeanUtils.copy(carsRepairParameter, CarsRepair.class);
+        JSONArray arrayCarPhoto= JSONArray.parseArray(JSON.toJSONString(carsRepairParameter.getCarPhoto()));
+        carsRepair.setCarPhotoJson(arrayCarPhoto.toJSONString());
         JSONArray array= JSONArray.parseArray(JSON.toJSONString(carsRepairParameter.getAdvicesItems()));
         carsRepair.setAdvicesJson(array.toJSONString());
         carsRepair.setCarsRepairNumber(carsRepairNumber);
@@ -92,6 +94,8 @@ public class CarsRepairServiceImpl implements CarsRepairService {
         CarsRepair carsRepair = BeanUtils.copy(carsRepairParameter, CarsRepair.class);
         JSONArray array= JSONArray.parseArray(JSON.toJSONString(carsRepairParameter.getAdvicesItems()));
         carsRepair.setAdvicesJson(array.toJSONString());
+        JSONArray arrayCarPhoto= JSONArray.parseArray(JSON.toJSONString(carsRepairParameter.getCarPhoto()));
+        carsRepair.setCarPhotoJson(arrayCarPhoto.toJSONString());
         carsRepair.setUpdateTime(new Date());
         Example example = new Example(CarsRepair.class);
         Example.Criteria criteria = example.createCriteria();
@@ -125,8 +129,11 @@ public class CarsRepairServiceImpl implements CarsRepairService {
         CarsRepair carsRepair = carsRepairMapper.selectOne(users);
         CarsRepairParameter carsRepairParameter = BeanUtils.copy(carsRepair, CarsRepairParameter.class);
         String advicesItems = carsRepair.getAdvicesJson();
+        String carPhoto = carsRepair.getCarPhotoJson();
         List<CarsRepair.Advices> list = JSONObject.parseArray(advicesItems, CarsRepair.Advices.class);
+        List<CarsRepair.CarPhoto> listCarPhoto = JSONObject.parseArray(carPhoto, CarsRepair.CarPhoto.class);
         carsRepairParameter.setAdvicesItems(list);
+        carsRepairParameter.setCarPhoto(listCarPhoto);
         return carsRepairParameter;
     }
 
