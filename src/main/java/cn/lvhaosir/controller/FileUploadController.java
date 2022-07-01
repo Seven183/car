@@ -55,7 +55,7 @@ public class FileUploadController {
         File file;
         boolean win = System.getProperty("os.name").toLowerCase().contains("win");
         if (!win) {
-            file = new File("/usr/local/softWare/car/uploadFile/");
+            file = new File("/usr/local/software/car/uploadFile/");
             logger.info("-----------存放上传文件的文件夹路径 -- 【" + file + "】-----------");
         } else {
             file = new File("D://uploadFile//");

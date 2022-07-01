@@ -12,7 +12,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         boolean win = System.getProperty("os.name").toLowerCase().contains("win");
         if (!win) {
             //linux
-            registry.addResourceHandler("/uploadFile/**").addResourceLocations("file:/usr/local/softWare/car/uploadFile/");
+            registry.addResourceHandler("/uploadFile/**").addResourceLocations("file:/usr/local/software/car/uploadFile/");
         } else {
             //windows
             registry.addResourceHandler("/uploadFile/**").addResourceLocations("file:D://uploadFile//");
