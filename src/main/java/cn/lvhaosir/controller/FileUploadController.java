@@ -55,14 +55,14 @@ public class FileUploadController {
         File file;
         boolean win = System.getProperty("os.name").toLowerCase().contains("win");
         if (!win) {
-            file = new File("/usr/local/software/car/uploadFile/");
-            logger.info("-----------存放上传文件的文件夹路径 -- 【" + file + "】-----------");
+            file = new File("/usr/local/software/car/uploadFile/" + imageName);
+            logger.info("<---------删除了linux图片------->" + file.getAbsolutePath());
+            return Result.ok(file.delete());
         } else {
-            file = new File("D://uploadFile//");
-            logger.info("-----------存放上传文件的文件夹路径 -- 【" + file + "】-----------");
+            file = new File("D://uploadFile//" + File.separator + imageName);
+            logger.info("<---------删除了windows图片----->" + file.getAbsolutePath());
+            return Result.ok(file.delete());
         }
-        boolean delete = new File(file + File.separator + imageName).delete();
-        return Result.ok(delete);
     }
 
 

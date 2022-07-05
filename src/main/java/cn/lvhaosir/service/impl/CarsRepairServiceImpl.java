@@ -146,7 +146,9 @@ public class CarsRepairServiceImpl implements CarsRepairService {
         List<CarsRepair> listCarsRepair = carsRepairMapper.selectByExample(carsRepair);
         CarsRepairParameter carsRepairParameter = BeanUtils.copy(listCarsRepair.get(0), CarsRepairParameter.class);
         List<CarsRepair.Advices> list = JSONObject.parseArray(listCarsRepair.get(0).getAdvicesJson(), CarsRepair.Advices.class);
+        List<CarsRepair.CarPhoto> listCarPhoto = JSONObject.parseArray(listCarsRepair.get(0).getCarPhotoJson(), CarsRepair.CarPhoto.class);
         carsRepairParameter.setAdvicesItems(list);
+        carsRepairParameter.setCarPhoto(listCarPhoto);
         return carsRepairParameter;
     }
 
