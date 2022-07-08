@@ -115,6 +115,6 @@ public class Drivers extends PageParam implements Serializable {
     /**
      * 汽车图片
      */
-    @Column(name = "car_photo")
-    private String carPhoto;
+    @Column(name = "car_photo_json")
+    private String carPhotoJson;
 }

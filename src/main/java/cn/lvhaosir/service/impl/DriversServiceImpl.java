@@ -4,10 +4,12 @@ import cn.lvhaosir.entity.CarsRepair;
 import cn.lvhaosir.entity.Drivers;
 import cn.lvhaosir.mapper.CarsRepairMapper;
 import cn.lvhaosir.mapper.DriversMapper;
+import cn.lvhaosir.paramater.CarsRepairParameter;
 import cn.lvhaosir.paramater.DriverParameter;
 import cn.lvhaosir.service.DriversService;
 import cn.lvhaosir.utils.BeanUtils;
 import cn.lvhaosir.utils.PageData;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -39,11 +41,26 @@ public class DriversServiceImpl implements DriversService {
 	}
 
 	@Override
-	public Drivers selectDriverByCarsRepairNumber(String carsRepairNumber) {
+	public DriverParameter selectDriverByCarsRepairNumber(String carsRepairNumber) {
 		CarsRepair carsRepair = new CarsRepair();
 		carsRepair.setCarsRepairNumber(carsRepairNumber);
 		CarsRepair carsRepair1 = carsRepairMapper.selectOne(carsRepair);
-		return BeanUtils.copy(carsRepair1,Drivers.class);
+		DriverParameter copy = BeanUtils.copy(carsRepair1, DriverParameter.class);
+		List<CarsRepair.CarPhoto> listCarPhoto = JSONObject.parseArray(carsRepair1.getCarPhotoJson(), CarsRepair.CarPhoto.class);
+		copy.setCarPhoto(listCarPhoto);
+		return copy;
+	}
+
+	@Override
+	public DriverParameter detailsByCarsRepairNumber(String carsRepairNumber) {
+		Example carsRepair = new Example(CarsRepair.class);
+		Example.Criteria criteriaCarsRepair = carsRepair.createCriteria();
+		criteriaCarsRepair.andEqualTo("carsRepairNumber", carsRepairNumber);
+		List<CarsRepair> listCarsRepair = carsRepairMapper.selectByExample(carsRepair);
+		DriverParameter driverParameter = BeanUtils.copy(listCarsRepair.get(0), DriverParameter.class);
+		List<CarsRepair.CarPhoto> listCarPhoto = JSONObject.parseArray(listCarsRepair.get(0).getCarPhotoJson(), CarsRepair.CarPhoto.class);
+		driverParameter.setCarPhoto(listCarPhoto);
+		return driverParameter;
 	}
 
 	@Override

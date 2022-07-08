@@ -9,7 +9,9 @@ public interface DriversService{
 
 	public Integer update(Drivers driver);
 
-	public Drivers selectDriverByCarsRepairNumber(String carsRepairNumber);
+	public DriverParameter selectDriverByCarsRepairNumber(String carsRepairNumber);
 
 	public PageData<Drivers> allDrivers(DriverParameter driverParameter);
+
+	public DriverParameter detailsByCarsRepairNumber(String carsRepairNumber);
 }

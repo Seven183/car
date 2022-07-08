@@ -2,6 +2,7 @@ package cn.lvhaosir.controller;
 
 
 import cn.lvhaosir.entity.Drivers;
+import cn.lvhaosir.paramater.CarsRepairParameter;
 import cn.lvhaosir.paramater.DriverParameter;
 import cn.lvhaosir.service.DriversService;
 import cn.lvhaosir.utils.PageData;
@@ -30,8 +31,8 @@ public class DriversController {
     }
 
     @GetMapping(value = "/selectByCarsRepairNumber/{carsRepairNumber}")
-    public Result<Drivers> selectDriverByCarsRepairNumber(@PathVariable String carsRepairNumber) {
-        Drivers queryById = driversService.selectDriverByCarsRepairNumber(carsRepairNumber);
+    public Result<DriverParameter> selectDriverByCarsRepairNumber(@PathVariable String carsRepairNumber) {
+        DriverParameter queryById = driversService.selectDriverByCarsRepairNumber(carsRepairNumber);
         return Result.ok(queryById);
     }
 
@@ -41,28 +42,9 @@ public class DriversController {
         return Result.ok(queryPageList);
     }
 
-
-    private String uploadFile(MultipartFile file, HttpServletRequest request, String idCard) {
-        //传入的是身份证号
-        File targetFile = null;
-        String substring = null;
-        try {
-            String path = request.getSession().getServletContext()
-                    .getRealPath("upload");
-            if (path == null) {
-                path = "/yjdata/www/www/chebida/upload";
-            }
-            String fileName = file.getOriginalFilename();
-            int lastIndexOf = fileName.lastIndexOf(".");
-            substring = fileName.substring(lastIndexOf);
-            targetFile = new File(path, idCard + substring);
-            if (!targetFile.exists()) {
-                targetFile.mkdirs();
-            }
-            file.transferTo(targetFile);
-            // request.setAttribute("filePath",targetFile.getAbsolutePath());
-        } catch (Exception e) {
-        }
-        return idCard + substring;
+    @GetMapping(value = "/detailsByCarsRepairNumber/{carsRepairNumber}")
+    public Result<DriverParameter> detailsByCarsRepairNumber(@PathVariable String carsRepairNumber) {
+        DriverParameter driverParameter = driversService.detailsByCarsRepairNumber(carsRepairNumber);
+        return Result.ok(driverParameter);
     }
 }
