@@ -1,11 +1,8 @@
 package cn.lvhaosir.controller;
 
 
-import cn.lvhaosir.entity.Insurance;
 import cn.lvhaosir.entity.SecondHandCar;
-import cn.lvhaosir.paramater.InsuranceParameter;
 import cn.lvhaosir.paramater.SecondHandCarParameter;
-import cn.lvhaosir.service.InsuranceService;
 import cn.lvhaosir.service.SecondHandCarService;
 import cn.lvhaosir.utils.PageData;
 import cn.lvhaosir.utils.Result;

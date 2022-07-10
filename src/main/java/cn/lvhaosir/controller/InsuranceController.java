@@ -26,9 +26,9 @@ public class InsuranceController {
         return Result.ok(add == 1 ? SystemSuccess.ADD_INSURANCE_SUCCESS.getMessage() : SystemException.ADD_INSURANCE_FAILED.getMessage());
     }
 
-    @GetMapping(value = "/deleteInsurance/{carsRepairNumber}")
-    public Result<String> deleteInsurance(@PathVariable String carsRepairNumber) {
-        Integer delete = insuranceService.delete(carsRepairNumber);
+    @GetMapping(value = "/deleteInsurance/{insuranceCode}")
+    public Result<String> deleteInsurance(@PathVariable String insuranceCode) {
+        Integer delete = insuranceService.delete(insuranceCode);
         return Result.ok(delete == 1 ? SystemSuccess.DELETE_INSURANCE_SUCCESS.getMessage() : SystemException.DELETE_INSURANCE_FAILED.getMessage());
     }
 
