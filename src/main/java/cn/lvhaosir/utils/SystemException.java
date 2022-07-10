@@ -28,7 +28,15 @@ public enum SystemException implements Rule {
     UPDATE_MEMBER_FAILED("016", "update_member_failed"),
 
     TOKEN_AUTH_FAILED("017", "token_auth_failed_or_expired"),
-    CAN_NOT_INSTANCE_ERROR("018", "This class cannot be instantiated");
+    CAN_NOT_INSTANCE_ERROR("018", "This class cannot be instantiated"),
+
+    ADD_INSURANCE_FAILED("014", "add_insurance_failed"),
+    DELETE_INSURANCE_FAILED("015", "delete_insurance_failed"),
+    UPDATE_INSURANCE_FAILED("016", "update_insurance_failed"),
+
+    ADD_SECONDHAND_CAR_FAILED("017", "add_secondhand_car_failed"),
+    DELETE_SECONDHAND_CAR_FAILED("018", "delete_secondhand_car_failed"),
+    UPDATE_SECONDHAND_CAR_FAILED("019", "update_secondhand_car_failed");
 
 
     private final String code;

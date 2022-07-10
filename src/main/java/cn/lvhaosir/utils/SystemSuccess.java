@@ -25,7 +25,16 @@ public enum SystemSuccess implements Rule {
     DELETE_MEMBER_SUCCESS("115", "delete_member_success"),
     UPDATE_MEMBER_SUCCESS("116", "update_member_success"),
 
-    TOKEN_AUTH_SUCCESS("117", "token_auth_success");
+    TOKEN_AUTH_SUCCESS("117", "token_auth_success"),
+
+    ADD_INSURANCE_SUCCESS("118", "add_insurance_success"),
+    DELETE_INSURANCE_SUCCESS("119", "delete_insurance_success"),
+    UPDATE_INSURANCE_SUCCESS("120", "update_insurance_success"),
+
+    ADD_SECONDHAND_CAR_SUCCESS("121", "add_secondhand_car_success"),
+    DELETE_SECONDHAND_CAR_SUCCESS("122", "delete_secondhand_car_success"),
+    UPDATE_SECONDHAND_CAR_SUCCESS("123", "update_secondhand_car_success");
+
 
     private final String code;
     private final String message;
