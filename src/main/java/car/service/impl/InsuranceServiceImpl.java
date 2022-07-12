@@ -1,7 +1,6 @@
 package car.service.impl;
 
 
-import car.entity.CarsRepair;
 import car.entity.Insurance;
 import car.mapper.InsuranceMapper;
 import car.paramater.InsuranceParameter;
@@ -54,7 +53,7 @@ public class InsuranceServiceImpl implements InsuranceService {
     public Integer update(InsuranceParameter insuranceParameter) {
         Insurance insurance = BeanUtils.copy(insuranceParameter, Insurance.class);
         insurance.setUpdateTime(new Date());
-        Example example = new Example(CarsRepair.class);
+        Example example = new Example(Insurance.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("insuranceCode", insuranceParameter.getInsuranceCode());
         return insuranceMapper.updateByExampleSelective(insurance, example);
@@ -96,6 +95,9 @@ public class InsuranceServiceImpl implements InsuranceService {
         }
         if (StringUtils.isNotBlank(insuranceParameter.getInsuranceIdCard())) {
             criteria.andLike("insuranceIdCard", "%" + insuranceParameter.getInsuranceIdCard() + "%");
+        }
+        if (StringUtils.isNotBlank(insuranceParameter.getInsurancePhone())) {
+            criteria.andLike("insurancePhone", "%" + insuranceParameter.getInsurancePhone() + "%");
         }
         if (StringUtils.isNotBlank(insuranceParameter.getStartCreateTime()) && StringUtils.isBlank(insuranceParameter.getEndCreateTime())) {
             criteria.andBetween("createTime", insuranceParameter.getStartCreateTime(), DateUtils.dateIncrease(new Date(), 1));

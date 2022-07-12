@@ -6,6 +6,7 @@ import car.paramater.SecondHandCarParameter;
 import car.utils.PageData;
 
 import java.text.ParseException;
+import java.util.List;
 
 
 public interface SecondHandCarService {
@@ -19,4 +20,6 @@ public interface SecondHandCarService {
 	public SecondHandCarParameter selectSecondHandCarById(Integer secondHandCarId);
 
 	public PageData<SecondHandCar> allSecondHandCar(SecondHandCarParameter secondHandCarParameter) throws ParseException;
+
+	public List<String> selectCarNumbers();
 }

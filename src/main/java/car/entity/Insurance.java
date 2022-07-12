@@ -51,19 +51,19 @@ public class Insurance extends PageParam implements Serializable {
      * 保险金额
      */
     @Column(name = "insurance_amount")
-    private Integer insuranceAmount;
+    private Double insuranceAmount;
 
     /**
      * 保险车辆品牌
      */
     @Column(name = "insurance_car_brand")
-    private Double insuranceCarBrand;
+    private String insuranceCarBrand;
 
     /**
      * 保险车辆名称
      */
     @Column(name = "insurance_car_name")
-    private Double insuranceCarName;
+    private String insuranceCarName;
 
     /**
      * 保险开始时间

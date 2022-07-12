@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@Table(name = "seccond_hand_car")
+@Table(name = "second_hand_car")
 public class SecondHandCar extends PageParam implements Serializable {
 
     @Id
@@ -107,6 +107,12 @@ public class SecondHandCar extends PageParam implements Serializable {
      */
     @Column(name = "second_hand_car_brand")
     private String secondHandCarBrand;
+
+    /**
+     * 二手车品牌
+     */
+    @Column(name = "second_hand_car_number")
+    private String secondHandCarNumber;
 
     /**
      * 二手车名称

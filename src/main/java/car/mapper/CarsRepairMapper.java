@@ -10,7 +10,7 @@ import java.util.List;
 public interface CarsRepairMapper extends CommonMapper<CarsRepair> {
 
     @Select("<script>" +
-                "select car_number as carNumber from cars_repair order by update_time desc" +
+                "select car_number as carNumber from cars_repair group by car_number order by update_time desc" +
             " </script>")
     List<String> selectCarNumbers();
 }

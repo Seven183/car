@@ -69,6 +69,10 @@ public class SecondHandCarServiceImpl implements SecondHandCarService {
         return BeanUtils.copy(secondHandCa, SecondHandCarParameter.class);
     }
 
+    @Override
+    public List<String> selectCarNumbers() {
+        return secondHandCarMapper.selectCarNumbers();
+    }
 
     @Override
     public PageData<SecondHandCar> allSecondHandCar(SecondHandCarParameter secondHandCarParameter) throws ParseException {
@@ -95,11 +99,23 @@ public class SecondHandCarServiceImpl implements SecondHandCarService {
         if (StringUtils.isNotBlank(secondHandCarParameter.getBuyerPhone())) {
             criteria.andLike("buyerPhone", "%" + secondHandCarParameter.getBuyerPhone() + "%");
         }
+        if (StringUtils.isNotBlank(secondHandCarParameter.getSellerUser())) {
+            criteria.andLike("sellerUser", "%" + secondHandCarParameter.getSellerUser() + "%");
+        }
+        if (StringUtils.isNotBlank(secondHandCarParameter.getSellerIdCard())) {
+            criteria.andLike("sellerIdCard", "%" + secondHandCarParameter.getSellerIdCard() + "%");
+        }
+        if (StringUtils.isNotBlank(secondHandCarParameter.getSellerPhone())) {
+            criteria.andLike("sellerPhone", "%" + secondHandCarParameter.getSellerPhone() + "%");
+        }
         if (StringUtils.isNotBlank(secondHandCarParameter.getSecondHandCarEngineNumber())) {
             criteria.andLike("secondHandCarEngineNumber", "%" + secondHandCarParameter.getSecondHandCarEngineNumber() + "%");
         }
         if (StringUtils.isNotBlank(secondHandCarParameter.getSecondHandCarName())) {
             criteria.andLike("secondHandCarName", "%" + secondHandCarParameter.getSecondHandCarName() + "%");
+        }
+        if (StringUtils.isNotBlank(secondHandCarParameter.getSecondHandCarNumber())) {
+            criteria.andLike("secondHandCarNumber", "%" + secondHandCarParameter.getSecondHandCarNumber() + "%");
         }
         if (StringUtils.isNotBlank(secondHandCarParameter.getSecondHandCarBrand())) {
             criteria.andLike("secondHandCarBrand", "%" + secondHandCarParameter.getSecondHandCarBrand() + "%");

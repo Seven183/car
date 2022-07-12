@@ -15,9 +15,9 @@ public class InsuranceParameter extends PageParam {
     private String insuranceUser;
     private String insuranceIdCard;
     private String insurancePhone;
-    private Integer insuranceAmount;
-    private Double insuranceCarBrand;
-    private Double insuranceCarName;
+    private Double insuranceAmount;
+    private String insuranceCarBrand;
+    private String insuranceCarName;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date insuranceStartTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

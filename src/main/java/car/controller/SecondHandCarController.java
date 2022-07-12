@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/secondHandCar")
@@ -47,6 +48,12 @@ public class SecondHandCarController {
     @GetMapping(value = "/allSecondHandCar")
     public Result<PageData<SecondHandCar>> allSecondHandCar(SecondHandCarParameter secondHandCarParameter) throws ParseException {
         PageData<SecondHandCar> secondHandCar = secondHandCarService.allSecondHandCar(secondHandCarParameter);
+        return Result.ok(secondHandCar);
+    }
+
+    @GetMapping(value = "/selectCarNumbers")
+    public Result<List<String>> selectCarNumbers(){
+        List<String> secondHandCar = secondHandCarService.selectCarNumbers();
         return Result.ok(secondHandCar);
     }
 }

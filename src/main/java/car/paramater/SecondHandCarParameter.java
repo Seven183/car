@@ -22,6 +22,7 @@ public class SecondHandCarParameter extends PageParam {
     private String sellerAge;
     private String sellerSex;
     private String sellerAddress;
+    private String secondHandCarNumber;
     private String secondHandCarAmount;
     private String secondHandCarBrand;
     private String secondHandCarName;
