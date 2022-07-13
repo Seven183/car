@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/insurance")
@@ -48,5 +49,55 @@ public class InsuranceController {
     public Result<PageData<Insurance>> allInsurance(InsuranceParameter insuranceParameter) throws ParseException {
         PageData<Insurance> insurance = insuranceService.allInsurance(insuranceParameter);
         return Result.ok(insurance);
+    }
+
+    /**
+     * 查询所有记录保险公司名
+     * @return
+     */
+    @GetMapping(value = "/selectInsuranceCompanyName")
+    public Result<List<String>> selectInsuranceCompanyName(){
+        List<String> secondHandCar = insuranceService.selectInsuranceCompanyName();
+        return Result.ok(secondHandCar);
+    }
+
+    /**
+     * 查询所有记录保险单号
+     * @return
+     */
+    @GetMapping(value = "/selectInsuranceCode")
+    public Result<List<String>> selectInsuranceCode(){
+        List<String> secondHandCar = insuranceService.selectInsuranceCode();
+        return Result.ok(secondHandCar);
+    }
+
+    /**
+     * 查询所有记录买家姓名
+     * @return
+     */
+    @GetMapping(value = "/selectInsuranceUser")
+    public Result<List<String>> selectInsuranceUser(){
+        List<String> secondHandCar = insuranceService.selectInsuranceUser();
+        return Result.ok(secondHandCar);
+    }
+
+    /**
+     * 查询所有记录买家身份证号
+     * @return
+     */
+    @GetMapping(value = "/selectInsuranceIdCard")
+    public Result<List<String>> selectInsuranceIdCard(){
+        List<String> secondHandCar = insuranceService.selectInsuranceIdCard();
+        return Result.ok(secondHandCar);
+    }
+
+    /**
+     * 查询所有记录买家手机号
+     * @return
+     */
+    @GetMapping(value = "/selectInsurancePhone")
+    public Result<List<String>> selectInsurancePhone(){
+        List<String> secondHandCar = insuranceService.selectInsurancePhone();
+        return Result.ok(secondHandCar);
     }
 }

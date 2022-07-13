@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
-import java.util.Set;
+import java.util.List;
 
 @RestController
 @RequestMapping("/carsRepair")
@@ -56,8 +56,8 @@ public class CarsRepairController {
      * @return
      */
     @GetMapping(value = "/selectCarNumbers")
-    public Result<Set<String>> selectCarNumbers() {
-        Set<String> listCarNumbers = carsRepairService.selectCarNumbers();
+    public Result<List<String>> selectCarNumbers() {
+        List<String> listCarNumbers = carsRepairService.selectCarNumbers();
         return Result.ok(listCarNumbers);
     }
 
@@ -79,5 +79,15 @@ public class CarsRepairController {
     public Result<CarsRepairParameter> detailsByCarsRepairNumber(@PathVariable String carsRepairNumber) {
         CarsRepairParameter carsRepairDetails = carsRepairService.detailsByCarsRepairNumber(carsRepairNumber);
         return Result.ok(carsRepairDetails);
+    }
+
+    /***
+     * 查询记录的所有维修类型
+     * @return
+     */
+    @GetMapping(value = "/selectCarsRepairType")
+    public Result<List<String>> selectCarsRepairType() {
+        List<String> list = carsRepairService.selectCarsRepairType();
+        return Result.ok(list);
     }
 }

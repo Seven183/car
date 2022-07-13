@@ -6,7 +6,7 @@ import car.paramater.CarsRepairParameter;
 import car.utils.PageData;
 
 import java.text.ParseException;
-import java.util.Set;
+import java.util.List;
 
 
 public interface CarsRepairService {
@@ -21,7 +21,9 @@ public interface CarsRepairService {
 
 	public PageData<CarsRepair> queryAllCarsRepairs(CarsRepairParameter carsRepairParameter) throws ParseException;
 
-	public Set<String> selectCarNumbers();
+	public List<String> selectCarNumbers();
+
+	public List<String> selectCarsRepairType();
 
 	public Integer statusOperate(String carsRepairNumber, Integer status);
 

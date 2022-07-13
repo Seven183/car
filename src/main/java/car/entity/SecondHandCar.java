@@ -109,7 +109,7 @@ public class SecondHandCar extends PageParam implements Serializable {
     private String secondHandCarBrand;
 
     /**
-     * 二手车品牌
+     * 二手车车牌号
      */
     @Column(name = "second_hand_car_number")
     private String secondHandCarNumber;

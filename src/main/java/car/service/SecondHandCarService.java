@@ -22,4 +22,12 @@ public interface SecondHandCarService {
 	public PageData<SecondHandCar> allSecondHandCar(SecondHandCarParameter secondHandCarParameter) throws ParseException;
 
 	public List<String> selectCarNumbers();
+
+	public List<String> selectCarBrands();
+
+	public List<String> selectBuyerPhones();
+
+	public List<String> selectBuyerUsers();
+
+	public List<String> selectBuyerIdCards();
 }

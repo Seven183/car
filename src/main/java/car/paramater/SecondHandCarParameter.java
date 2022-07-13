@@ -1,10 +1,12 @@
 package car.paramater;
 
+import car.entity.CarsRepair;
 import car.utils.PageParam;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class SecondHandCarParameter extends PageParam {
@@ -15,7 +17,7 @@ public class SecondHandCarParameter extends PageParam {
     private String buyerPhone;
     private String buyerAge;
     private String buyerSex;
-    private Integer buyerAddress;
+    private String buyerAddress;
     private String sellerUser;
     private String sellerIdCard;
     private String sellerPhone;
@@ -27,7 +29,7 @@ public class SecondHandCarParameter extends PageParam {
     private String secondHandCarBrand;
     private String secondHandCarName;
     private String secondHandCarEngineNumber;
-    private String secondHandCarPhotoJson;
+    private List<CarsRepair.CarPhoto> carPhoto;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

@@ -6,6 +6,7 @@ import car.paramater.InsuranceParameter;
 import car.utils.PageData;
 
 import java.text.ParseException;
+import java.util.List;
 
 
 public interface InsuranceService {
@@ -19,4 +20,14 @@ public interface InsuranceService {
 	public InsuranceParameter selectInsuranceByInsuranceCode(String InsuranceCode);
 
 	public PageData<Insurance> allInsurance(InsuranceParameter insuranceParameter) throws ParseException;
+
+	public List<String> selectInsuranceCompanyName();
+
+	public List<String> selectInsuranceCode();
+
+	public List<String> selectInsuranceUser();
+
+	public List<String> selectInsuranceIdCard();
+
+	public List<String> selectInsurancePhone();
 }

@@ -51,9 +51,53 @@ public class SecondHandCarController {
         return Result.ok(secondHandCar);
     }
 
+    /**
+     * 查询所有记录车牌号
+     * @return
+     */
     @GetMapping(value = "/selectCarNumbers")
     public Result<List<String>> selectCarNumbers(){
         List<String> secondHandCar = secondHandCarService.selectCarNumbers();
+        return Result.ok(secondHandCar);
+    }
+
+    /**
+     * 查询所有记录车牌号
+     * @return
+     */
+    @GetMapping(value = "/selectCarBrands")
+    public Result<List<String>> selectCarBrands(){
+        List<String> secondHandCar = secondHandCarService.selectCarBrands();
+        return Result.ok(secondHandCar);
+    }
+
+    /**
+     * 查询所有记录买家手机号
+     * @return
+     */
+    @GetMapping(value = "/selectBuyerPhones")
+    public Result<List<String>> selectBuyerPhones(){
+        List<String> secondHandCar = secondHandCarService.selectBuyerPhones();
+        return Result.ok(secondHandCar);
+    }
+
+    /**
+     * 查询所有记录买家姓名
+     * @return
+     */
+    @GetMapping(value = "/selectBuyerUsers")
+    public Result<List<String>> selectBuyerUsers(){
+        List<String> secondHandCar = secondHandCarService.selectBuyerUsers();
+        return Result.ok(secondHandCar);
+    }
+
+    /**
+     * 查询所有记录买家身份证号
+     * @return
+     */
+    @GetMapping(value = "/selectBuyerIdCards")
+    public Result<List<String>> selectBuyerIdCards(){
+        List<String> secondHandCar = secondHandCarService.selectBuyerIdCards();
         return Result.ok(secondHandCar);
     }
 }

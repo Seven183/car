@@ -10,6 +10,9 @@ import car.service.SecondHandCarService;
 import car.utils.BeanUtils;
 import car.utils.DateUtils;
 import car.utils.PageData;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import java.text.ParseException;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +37,8 @@ public class SecondHandCarServiceImpl implements SecondHandCarService {
     @Override
     public Integer add(SecondHandCarParameter secondHandCarParameter) {
         SecondHandCar secondHandCar = BeanUtils.copy(secondHandCarParameter, SecondHandCar.class);
+        JSONArray arrayCarPhoto= JSONArray.parseArray(JSON.toJSONString(secondHandCarParameter.getCarPhoto()));
+        secondHandCar.setSecondHandCarPhotoJson(arrayCarPhoto.toJSONString());
         secondHandCar.setCreateTime(new Date());
         secondHandCar.setUpdateTime(new Date());
         secondHandCar.setStatus(0);
@@ -54,8 +60,10 @@ public class SecondHandCarServiceImpl implements SecondHandCarService {
     @Override
     public Integer update(SecondHandCarParameter secondHandCarParameter) {
         SecondHandCar secondHandCar = BeanUtils.copy(secondHandCarParameter, SecondHandCar.class);
+        JSONArray arrayCarPhoto= JSONArray.parseArray(JSON.toJSONString(secondHandCarParameter.getCarPhoto()));
+        secondHandCar.setSecondHandCarPhotoJson(arrayCarPhoto.toJSONString());
         secondHandCar.setUpdateTime(new Date());
-        Example example = new Example(CarsRepair.class);
+        Example example = new Example(SecondHandCar.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("secondHandCarId", secondHandCarParameter.getSecondHandCarId());
         return secondHandCarMapper.updateByExampleSelective(secondHandCar, example);
@@ -66,18 +74,18 @@ public class SecondHandCarServiceImpl implements SecondHandCarService {
         SecondHandCar secondHandCar = new SecondHandCar();
         secondHandCar.setSecondHandCarId(secondHandCarId);
         SecondHandCar secondHandCa = secondHandCarMapper.selectOne(secondHandCar);
-        return BeanUtils.copy(secondHandCa, SecondHandCarParameter.class);
+        SecondHandCarParameter secondHandCarParameter = BeanUtils.copy(secondHandCa, SecondHandCarParameter.class);
+        String carPhoto = secondHandCa.getSecondHandCarPhotoJson();
+        List<CarsRepair.CarPhoto> listCarPhoto = JSONObject.parseArray(carPhoto, CarsRepair.CarPhoto.class);
+        secondHandCarParameter.setCarPhoto(listCarPhoto);
+        return secondHandCarParameter;
     }
 
-    @Override
-    public List<String> selectCarNumbers() {
-        return secondHandCarMapper.selectCarNumbers();
-    }
 
     @Override
     public PageData<SecondHandCar> allSecondHandCar(SecondHandCarParameter secondHandCarParameter) throws ParseException {
         PageHelper.startPage(secondHandCarParameter.getPageNum(), secondHandCarParameter.getPageSize());
-        Example example = new Example(Insurance.class);
+        Example example = new Example(SecondHandCar.class);
         Example.Criteria criteria = example.createCriteria();
 
         if (secondHandCarParameter.getIsDelete() != null) {
@@ -131,5 +139,41 @@ public class SecondHandCarServiceImpl implements SecondHandCarService {
         list.sort(Comparator.comparing(SecondHandCar::getUpdateTime).reversed());
         PageInfo<SecondHandCar> pageInfo = PageInfo.of(list);
         return new PageData<>(list, pageInfo.getTotal());
+    }
+
+    @Override
+    public List<String> selectCarNumbers() {
+        List<String> strings = secondHandCarMapper.selectCarNumbers();
+        Collections.reverse(strings);
+        return strings;
+
+    }
+
+    @Override
+    public List<String> selectCarBrands() {
+        List<String> strings = secondHandCarMapper.selectCarBrands();
+        Collections.reverse(strings);
+        return strings;
+    }
+
+    @Override
+    public List<String> selectBuyerPhones() {
+        List<String> strings = secondHandCarMapper.selectBuyerPhones();
+        Collections.reverse(strings);
+        return strings;
+    }
+
+    @Override
+    public List<String> selectBuyerUsers() {
+        List<String> strings = secondHandCarMapper.selectBuyerUsers();
+        Collections.reverse(strings);
+        return strings;
+    }
+
+    @Override
+    public List<String> selectBuyerIdCards() {
+        List<String> strings = secondHandCarMapper.selectBuyerIdCards();
+        Collections.reverse(strings);
+        return strings;
     }
 }

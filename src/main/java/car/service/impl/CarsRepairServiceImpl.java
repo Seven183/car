@@ -131,8 +131,8 @@ public class CarsRepairServiceImpl implements CarsRepairService {
         String advicesItems = carsRepair.getAdvicesJson();
         String carPhoto = carsRepair.getCarPhotoJson();
         List<CarsRepair.Advices> list = JSONObject.parseArray(advicesItems, CarsRepair.Advices.class);
-        List<CarsRepair.CarPhoto> listCarPhoto = JSONObject.parseArray(carPhoto, CarsRepair.CarPhoto.class);
         carsRepairParameter.setAdvicesItems(list);
+        List<CarsRepair.CarPhoto> listCarPhoto = JSONObject.parseArray(carPhoto, CarsRepair.CarPhoto.class);
         carsRepairParameter.setCarPhoto(listCarPhoto);
         return carsRepairParameter;
     }
@@ -153,9 +153,17 @@ public class CarsRepairServiceImpl implements CarsRepairService {
     }
 
     @Override
-    public Set<String> selectCarNumbers() {
-        List<String> list = carsRepairMapper.selectCarNumbers();
-        return new HashSet<String>(list);
+    public List<String> selectCarNumbers() {
+        List<String> strings = carsRepairMapper.selectCarNumbers();
+        Collections.reverse(strings);
+        return strings;
+    }
+
+    @Override
+    public List<String> selectCarsRepairType() {
+        List<String> strings = carsRepairMapper.selectCarsRepairType();
+        Collections.reverse(strings);
+        return strings;
     }
 
     @Override

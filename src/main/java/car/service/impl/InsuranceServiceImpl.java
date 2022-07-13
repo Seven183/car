@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import java.text.ParseException;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -110,5 +111,40 @@ public class InsuranceServiceImpl implements InsuranceService {
         list.sort(Comparator.comparing(Insurance::getUpdateTime).reversed());
         PageInfo<Insurance> pageInfo = PageInfo.of(list);
         return new PageData<>(list, pageInfo.getTotal());
+    }
+
+    @Override
+    public List<String> selectInsuranceCompanyName() {
+        List<String> strings = insuranceMapper.selectInsuranceCompanyName();
+        Collections.reverse(strings);
+        return strings;
+    }
+
+    @Override
+    public List<String> selectInsuranceCode() {
+        List<String> strings = insuranceMapper.selectInsuranceCode();
+        Collections.reverse(strings);
+        return strings;
+    }
+
+    @Override
+    public List<String> selectInsuranceUser() {
+        List<String> strings = insuranceMapper.selectInsuranceUser();
+        Collections.reverse(strings);
+        return strings;
+    }
+
+    @Override
+    public List<String> selectInsuranceIdCard() {
+        List<String> strings = insuranceMapper.selectInsuranceIdCard();
+        Collections.reverse(strings);
+        return strings;
+    }
+
+    @Override
+    public List<String> selectInsurancePhone() {
+        List<String> strings = insuranceMapper.selectInsurancePhone();
+        Collections.reverse(strings);
+        return strings;
     }
 }
