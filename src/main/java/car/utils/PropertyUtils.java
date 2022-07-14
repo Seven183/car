@@ -13,17 +13,9 @@ public class PropertyUtils {
 
 	public static final Properties contextProperties = new Properties();
 
-	public static void init(String[] env){
+	public static void init(){
 
-		String conf;
-        if (env.length > 0){
-			conf = "application-" + env[0] + ".properties";
-			log.info("配置文件加载完毕，环境：" + env[0]);
-		} else {
-			conf = "application.properties";
-		}
-
-		try (InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(conf)){
+		try (InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream("application.properties")){
 			assert in != null;
 			InputStreamReader inputStreamReader = new InputStreamReader(in, StandardCharsets.UTF_8);
 			contextProperties.load(inputStreamReader);
