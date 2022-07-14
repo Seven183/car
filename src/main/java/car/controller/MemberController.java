@@ -11,6 +11,7 @@ import car.utils.SystemSuccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -55,5 +56,23 @@ public class MemberController {
     public Result<Set<String>> selectCarNumbers() {
         Set<String> advicesPageData = memberService.selectCarNumbers();
         return Result.ok(advicesPageData);
+    }
+
+    @GetMapping(value = "/selectCarBrands")
+    public Result<List<String>> selectCarBrands(){
+        List<String> secondHandCar = memberService.selectCarBrands();
+        return Result.ok(secondHandCar);
+    }
+
+    @GetMapping(value = "/selectMemberPhones")
+    public Result<List<String>> selectMemberPhones(){
+        List<String> secondHandCar = memberService.selectMemberPhones();
+        return Result.ok(secondHandCar);
+    }
+
+    @GetMapping(value = "/selectMemberUsers")
+    public Result<List<String>> selectMemberUsers(){
+        List<String> secondHandCar = memberService.selectMemberUsers();
+        return Result.ok(secondHandCar);
     }
 }

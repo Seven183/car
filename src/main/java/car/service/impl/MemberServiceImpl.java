@@ -59,12 +59,6 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Set<String> selectCarNumbers() {
-        List<String> list = memberMapper.selectCarNumbers();
-        return new HashSet<String>(list);
-    }
-
-    @Override
     public PageData<Member> allMember(MemberParameter memberParameter) {
 
         PageHelper.startPage(memberParameter.getPageNum(),memberParameter.getPageSize());
@@ -98,5 +92,33 @@ public class MemberServiceImpl implements MemberService {
         list.sort(Comparator.comparing(Member::getUpdateTime).reversed());
         PageInfo<Member> pageInfo = PageInfo.of(list);
         return new PageData<>(list, pageInfo.getTotal());
+    }
+
+
+    @Override
+    public Set<String> selectCarNumbers() {
+        List<String> list = memberMapper.selectCarNumbers();
+        return new HashSet<String>(list);
+    }
+
+    @Override
+    public List<String> selectCarBrands() {
+        List<String> strings = memberMapper.selectCarBrands();
+        Collections.reverse(strings);
+        return strings;
+    }
+
+    @Override
+    public List<String> selectMemberPhones() {
+        List<String> strings = memberMapper.selectMemberPhones();
+        Collections.reverse(strings);
+        return strings;
+    }
+
+    @Override
+    public List<String> selectMemberUsers() {
+        List<String> strings = memberMapper.selectMemberUsers();
+        Collections.reverse(strings);
+        return strings;
     }
 }
