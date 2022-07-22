@@ -21,11 +21,13 @@ public interface CarsRepairService {
 
 	public PageData<CarsRepair> queryAllCarsRepairs(CarsRepairParameter carsRepairParameter) throws ParseException;
 
+	public Integer statusOperate(String carsRepairNumber, Integer status);
+
+	public CarsRepairParameter detailsByCarsRepairNumber(String carsRepairNumber);
+
 	public List<String> selectCarNumbers();
 
 	public List<String> selectCarsRepairType();
 
-	public Integer statusOperate(String carsRepairNumber, Integer status);
-
-	public CarsRepairParameter detailsByCarsRepairNumber(String carsRepairNumber);
+	public List<String> selectPhone();
 }

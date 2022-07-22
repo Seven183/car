@@ -153,20 +153,6 @@ public class CarsRepairServiceImpl implements CarsRepairService {
     }
 
     @Override
-    public List<String> selectCarNumbers() {
-        List<String> strings = carsRepairMapper.selectCarNumbers();
-        Collections.reverse(strings);
-        return strings;
-    }
-
-    @Override
-    public List<String> selectCarsRepairType() {
-        List<String> strings = carsRepairMapper.selectCarsRepairType();
-        Collections.reverse(strings);
-        return strings;
-    }
-
-    @Override
     public Integer statusOperate(String carsRepairNumber, Integer status) {
         CarsRepair carsRepair = new CarsRepair();
         carsRepair.setStatus(status);
@@ -227,5 +213,26 @@ public class CarsRepairServiceImpl implements CarsRepairService {
         list.sort(Comparator.comparing(CarsRepair::getUpdateTime).reversed());
         PageInfo<CarsRepair> pageInfo = PageInfo.of(list);
         return new PageData<>(list, pageInfo.getTotal());
+    }
+
+    @Override
+    public List<String> selectCarNumbers() {
+        List<String> strings = carsRepairMapper.selectCarNumbers();
+        Collections.reverse(strings);
+        return strings;
+    }
+
+    @Override
+    public List<String> selectCarsRepairType() {
+        List<String> strings = carsRepairMapper.selectCarsRepairType();
+        Collections.reverse(strings);
+        return strings;
+    }
+
+    @Override
+    public List<String> selectPhone() {
+        List<String> strings = carsRepairMapper.selectPhone();
+        Collections.reverse(strings);
+        return strings;
     }
 }

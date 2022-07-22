@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -72,5 +73,26 @@ public class AdvicesServiceImpl implements AdvicesService {
         list.sort(Comparator.comparing(Advices::getUpdateTime).reversed());
         PageInfo<Advices> pageInfo = PageInfo.of(list);
         return new PageData<>(list, pageInfo.getTotal());
+    }
+
+    @Override
+    public List<String> selectCarNumbers() {
+        List<String> strings = advicesMapper.selectCarNumbers();
+        Collections.reverse(strings);
+        return strings;
+    }
+
+    @Override
+    public List<String> selectAdvicesType() {
+        List<String> strings = advicesMapper.selectAdvicesType();
+        Collections.reverse(strings);
+        return strings;
+    }
+
+    @Override
+    public List<String> selectAdvicesName() {
+        List<String> strings = advicesMapper.selectAdvicesName();
+        Collections.reverse(strings);
+        return strings;
     }
 }

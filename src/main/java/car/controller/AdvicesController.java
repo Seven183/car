@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/advice")
@@ -23,5 +25,23 @@ public class AdvicesController {
     public Result<PageData<Advices>> allAdvices(AdvicesParameter advicesParameter) {
         PageData<Advices> advicesPageData = advicesService.allAdvices(advicesParameter);
         return Result.ok(advicesPageData);
+    }
+
+    @GetMapping(value = "/selectAdvicesType")
+    public Result<List<String>> selectAdvicesType() {
+        List<String> list = advicesService.selectAdvicesType();
+        return Result.ok(list);
+    }
+
+    @GetMapping(value = "/selectCarNumbers")
+    public Result<List<String>> selectCarNumbers() {
+        List<String> listCarNumbers = advicesService.selectCarNumbers();
+        return Result.ok(listCarNumbers);
+    }
+
+    @GetMapping(value = "/selectAdvicesName")
+    public Result<List<String>> selectAdvicesName() {
+        List<String> listCarNumbers = advicesService.selectAdvicesName();
+        return Result.ok(listCarNumbers);
     }
 }

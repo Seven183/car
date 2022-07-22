@@ -51,43 +51,33 @@ public class CarsRepairController {
         return Result.ok(queryParamList);
     }
 
-    /***
-     * 根据carNumber分组
-     * @return
-     */
-    @GetMapping(value = "/selectCarNumbers")
-    public Result<List<String>> selectCarNumbers() {
-        List<String> listCarNumbers = carsRepairService.selectCarNumbers();
-        return Result.ok(listCarNumbers);
-    }
-
-    /***
-     *  根据 carsRepairId 操作 status 值
-     * @return
-     */
     @GetMapping(value = "/statusOperate")
     public Result<Integer> statusOperate(String carsRepairNumber, Integer status) {
         Integer update = carsRepairService.statusOperate(carsRepairNumber, status);
         return Result.ok(update);
     }
 
-    /***
-     * 根据carNumber得到详细信息
-     * @return
-     */
     @GetMapping(value = "/detailsByCarsRepairNumber/{carsRepairNumber}")
     public Result<CarsRepairParameter> detailsByCarsRepairNumber(@PathVariable String carsRepairNumber) {
         CarsRepairParameter carsRepairDetails = carsRepairService.detailsByCarsRepairNumber(carsRepairNumber);
         return Result.ok(carsRepairDetails);
     }
 
-    /***
-     * 查询记录的所有维修类型
-     * @return
-     */
     @GetMapping(value = "/selectCarsRepairType")
     public Result<List<String>> selectCarsRepairType() {
         List<String> list = carsRepairService.selectCarsRepairType();
         return Result.ok(list);
+    }
+
+    @GetMapping(value = "/selectCarNumbers")
+    public Result<List<String>> selectCarNumbers() {
+        List<String> listCarNumbers = carsRepairService.selectCarNumbers();
+        return Result.ok(listCarNumbers);
+    }
+
+    @GetMapping(value = "/selectPhone")
+    public Result<List<String>> selectPhone() {
+        List<String> listCarNumbers = carsRepairService.selectPhone();
+        return Result.ok(listCarNumbers);
     }
 }
